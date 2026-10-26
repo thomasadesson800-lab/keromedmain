@@ -1,0 +1,3582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiromed - Medical Supplies Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #8B6F4E;
+            --secondary-color: #E67E50;
+            --accent-color: #7A9BA8;
+            --text-dark: #1a1a1a;
+            --text-gray: #666;
+            --text-light: #999;
+            --bg-light: #f8f8f8;
+            --white: #ffffff;
+            --border-color: #e5e5e5;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #e67e22;
+            --noon-yellow: #feee00;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+
+        .announcement-bar {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 10px 0;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .logo svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-icons button {
+            color: var(--text-dark);
+            font-size: 20px;
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .icon-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary-color);
+            color: var(--white);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .hero {
+            background: var(--bg-light);
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .deal-banner {
+            background: linear-gradient(135deg, #E67E50 0%, #8B6F4E 100%);
+            color: var(--white);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 0 auto 25px;
+            max-width: 800px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(230, 126, 80, 0.25);
+        }
+
+        .categories-section {
+            padding: 40px 0 60px;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            background: var(--bg-light);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .category-card:hover, .category-card.active {
+            border-color: var(--primary-color);
+            background: #fff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .category-card.show-all-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+            color: var(--white);
+            border: 2px dashed var(--secondary-color);
+        }
+
+        .category-card.show-all-card:hover {
+            border-color: var(--white);
+            background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+        }
+
+        .category-card.show-all-card .category-icon,
+        .category-card.show-all-card h3,
+        .category-card.show-all-card p {
+            color: var(--white);
+        }
+
+        .category-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .shop-section, .wishlist-section {
+            padding: 40px 0 80px;
+            background: var(--bg-light);
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            padding: 5px 20px;
+            transition: border-color 0.3s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--primary-color);
+        }
+
+        .search-bar input {
+            width: 100%;
+            border: none;
+            padding: 8px 12px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--text-gray);
+            font-size: 18px;
+        }
+
+        .brand-filter-select {
+            display: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--white);
+            outline: none;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: border-color 0.3s;
+            font-weight: 500;
+        }
+
+        .brand-filter-select:focus, .brand-filter-select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .show-all-btn {
+            background: var(--text-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            line-height: 1.2;
+        }
+
+        .show-all-btn:hover {
+            background: var(--primary-color);
+        }
+
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .wishlist-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+
+        .wishlist-toggle-btn.active i {
+            color: var(--danger);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 240px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        .product-image i {
+            font-size: 60px;
+            color: var(--accent-color);
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-brand-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .product-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+
+        .product-info h3:hover {
+            color: var(--primary-color);
+        }
+
+        .product-rating-summary {
+            font-size: 12px;
+            color: #f39c12;
+            cursor: pointer;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            margin-top: auto;
+        }
+
+        /* Dynamic Stock Indicator Styles */
+        .stock-status-badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            display: inline-block;
+            text-align: center;
+        }
+        .stock-status-badge.in-stock {
+            background-color: #e8f8f0;
+            color: var(--success);
+        }
+        .stock-status-badge.low-stock {
+            background-color: #fef5e7;
+            color: var(--warning);
+        }
+        .stock-status-badge.out-of-stock {
+            background-color: #fdeaea;
+            color: var(--danger);
+        }
+
+        .select-group {
+            margin-bottom: 10px;
+        }
+
+        .select-group label {
+            font-size: 12px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .select-group select {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            background: #fff;
+        }
+
+        .product-card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            padding: 12px;
+            background: var(--text-dark);
+            color: var(--white);
+            border: none;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover:not(:disabled) {
+            background: var(--primary-color);
+        }
+
+        .add-to-cart:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .view-details-btn {
+            padding: 12px 15px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .view-details-btn:hover {
+            background: var(--border-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 750px;
+            border-radius: 8px;
+            padding: 30px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .promo-popup-content {
+            background: linear-gradient(135deg, #ffffff 0%, #fdf8f4 100%);
+            border: 3px solid var(--secondary-color);
+            text-align: center;
+            max-width: 520px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 40px rgba(230, 126, 80, 0.3);
+            border-radius: 12px;
+        }
+
+        .promo-badge {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .detail-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .detail-main-img {
+            height: 300px;
+            background: #ffffff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            padding: 12px;
+        }
+
+        .detail-main-img img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        .detail-thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .thumb-box {
+            width: 60px;
+            height: 60px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--text-gray);
+            overflow: hidden;
+            flex-shrink: 0;
+            padding: 4px;
+        }
+
+        .thumb-box img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .thumb-box.active {
+            border-color: var(--primary-color);
+            background: #fff;
+        }
+
+        .detail-info h2 {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .detail-meta-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .detail-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .detail-spec-list {
+            margin: 15px 0;
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .detail-spec-list li {
+            margin-bottom: 6px;
+            list-style-type: none;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .reviews-section {
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .review-card {
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+        }
+
+        .review-author {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .review-stars {
+            color: #f39c12;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .verified-purchase-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 8px; border-radius:999px; background:#e8f8f0; color:#177245; font-size:11px; font-weight:700; }
+        .review-text {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .star-rating-input {
+            display: flex;
+            gap: 5px;
+            font-size: 20px;
+            color: #ccc;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .star-rating-input .fa-star.selected {
+            color: #f39c12;
+        }
+
+        .cart-items-container {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            background: #fbfbfb;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info h4 {
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .cart-item-info p {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart-controls button {
+            background: #eee;
+            border: 1px solid #ccc;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .summary-box {
+            background: #f0f4f8;
+            border: 1px solid #d0dbe5;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .summary-row.total {
+            font-size: 16px;
+            font-weight: bold;
+            border-top: 1px dashed #aaa;
+            padding-top: 8px;
+            margin-bottom: 0;
+            color: var(--primary-color);
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 10px 0 15px;
+        }
+
+        .payment-card {
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-card.active {
+            border-color: var(--primary-color);
+            background: #fef8f4;
+        }
+
+        .visa-fields {
+            display: none;
+            gap: 10px;
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .visa-fields.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .noon-tracker {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .tracking-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+
+        .tracking-progress-line {
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            height: 4px;
+            background: #38ae04;
+            z-index: 1;
+            transition: width 0.5s ease;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 16px;
+            color: #888;
+            transition: all 0.3s;
+        }
+
+        .step-item.active .step-icon {
+            border-color: #38ae04;
+            background: #38ae04;
+            color: #fff;
+            animation: pulse 1.5s infinite;
+        }
+
+        .step-item.completed .step-icon {
+            border-color: #38ae04;
+            background: #38ae04;
+            color: #fff;
+        }
+
+        .step-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 174, 4, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 174, 4, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 174, 4, 0); }
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--text-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .admin-modal-content {
+            max-width: 1100px;
+            width: 95%;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .admin-table th, .admin-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .admin-table th {
+            background: var(--bg-light);
+            font-weight: 600;
+        }
+
+        .admin-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-processing { background: #cce5ff; color: #004085; }
+        .badge-shipping { background: #e2e3e5; color: #383d41; }
+        .badge-delivered { background: #d4edda; color: #155724; }
+
+        .secret-footer-trigger {
+            user-select: none;
+            cursor: pointer;
+            padding: 5px;
+            display: inline-block;
+        }
+
+        @media (max-width: 900px) {
+            .products-grid, .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .product-detail-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Kiromed polish layer: preserves the existing palette and layout while adding depth. */
+        :root {
+            --surface-soft: #fcfaf8;
+            --shadow-soft: 0 10px 30px rgba(26, 26, 26, 0.07);
+            --shadow-lift: 0 18px 42px rgba(26, 26, 26, 0.12);
+            --ease-premium: cubic-bezier(.22, .61, .36, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .announcement-bar {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(90deg, #171717, #242424 50%, #171717);
+            box-shadow: 0 1px 0 rgba(255,255,255,.08) inset;
+        }
+
+        .announcement-bar::after {
+            content: '';
+            position: absolute;
+            inset: 0 auto 0 -20%;
+            width: 18%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
+            transform: skewX(-20deg);
+            animation: announcementSheen 7s var(--ease-premium) infinite;
+            pointer-events: none;
+        }
+
+        header {
+            background: rgba(255,255,255,.92);
+            box-shadow: 0 4px 18px rgba(26,26,26,.035);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .header-top { padding: 14px 0; }
+        .logo svg { transition: transform .35s var(--ease-premium), filter .35s ease; }
+        .logo:hover svg { transform: translateY(-2px) scale(1.02); filter: drop-shadow(0 8px 10px rgba(139,111,78,.14)); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 100%;
+            bottom: -8px;
+            height: 2px;
+            border-radius: 99px;
+            background: var(--secondary-color);
+            transition: right .3s var(--ease-premium);
+        }
+        .nav-links a:hover::after, .nav-links a:focus-visible::after { right: 0; }
+
+        .header-icons button,
+        .wishlist-toggle-btn,
+        .view-details-btn,
+        .show-all-btn,
+        .category-card,
+        .payment-card,
+        .add-to-cart,
+        .submit-btn { transition: transform .28s var(--ease-premium), box-shadow .28s ease, background-color .28s ease, border-color .28s ease, color .28s ease; }
+
+        .header-icons button:hover { color: var(--primary-color); transform: translateY(-2px); }
+        .header-icons button:active, .wishlist-toggle-btn:active, .add-to-cart:active, .submit-btn:active { transform: scale(.96); }
+
+        .icon-count { box-shadow: 0 0 0 3px #fff; transition: transform .3s var(--ease-premium); }
+        .icon-count.bump { animation: countBump .42s var(--ease-premium); }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% -25%, rgba(230,126,80,.14), transparent 52%), var(--bg-light);
+            padding: 74px 0 52px;
+        }
+        .hero::before, .hero::after { content: ''; position: absolute; border-radius: 50%; pointer-events: none; filter: blur(2px); }
+        .hero::before { width: 230px; height: 230px; right: -90px; top: 34px; background: rgba(122,155,168,.11); }
+        .hero::after { width: 180px; height: 180px; left: -75px; bottom: -80px; background: rgba(230,126,80,.10); }
+        .hero > .container { position: relative; z-index: 1; }
+        .hero h1 { letter-spacing: 2px; font-weight: 500; }
+
+        .deal-banner { box-shadow: var(--shadow-soft); border: 1px solid rgba(255,255,255,.22); transition: transform .3s var(--ease-premium), box-shadow .3s ease; }
+        .deal-banner:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(230,126,80,.22); }
+
+        .section-title h2 { font-weight: 500; letter-spacing: 1.5px; }
+        .section-title h2::after { content: ''; display: block; width: 34px; height: 3px; margin: 12px auto 0; border-radius: 99px; background: var(--secondary-color); }
+
+        .category-card { box-shadow: 0 2px 0 rgba(255,255,255,.8) inset; }
+        .category-card:hover, .category-card.active { transform: translate3d(0,-6px,0); box-shadow: var(--shadow-lift); }
+        .category-icon { transition: transform .35s var(--ease-premium), color .3s ease; }
+        .category-card:hover .category-icon { transform: translateY(-3px) scale(1.06); }
+
+        .search-bar { box-shadow: 0 4px 18px rgba(26,26,26,.035); transition: border-color .3s ease, box-shadow .3s ease, transform .3s var(--ease-premium); }
+        .search-bar:focus-within { box-shadow: 0 0 0 4px rgba(139,111,78,.10), var(--shadow-soft); transform: translateY(-1px); }
+
+        .product-card {
+            border-color: rgba(229,229,229,.9);
+            box-shadow: 0 2px 0 rgba(255,255,255,.85) inset;
+            transition: transform .35s var(--ease-premium), box-shadow .35s ease, border-color .35s ease;
+        }
+        .product-card:hover { transform: translate3d(0,-7px,0); box-shadow: var(--shadow-lift); border-color: rgba(139,111,78,.24); }
+        .product-image { background: linear-gradient(145deg, #fff, #fcfbfa); }
+        .product-image img { transition: transform .5s var(--ease-premium), filter .5s ease; will-change: transform; }
+        .product-card:hover .product-image img { transform: scale(1.045); filter: saturate(1.04); }
+        .wishlist-toggle-btn { box-shadow: 0 4px 12px rgba(26,26,26,.08); }
+        .wishlist-toggle-btn:hover { color: var(--danger); border-color: rgba(231,76,60,.35); transform: scale(1.08); }
+        .product-brand-tag { letter-spacing: .9px; }
+        .product-info h3 { line-height: 1.35; }
+        .product-price { letter-spacing: -.2px; }
+        .add-to-cart, .submit-btn { box-shadow: 0 5px 12px rgba(26,26,26,.12); }
+        .add-to-cart:hover:not(:disabled), .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 9px 18px rgba(26,26,26,.16); }
+        .add-to-cart.is-loading { pointer-events: none; opacity: .78; }
+        .add-to-cart.is-loading::after { content: ''; display: inline-block; width: 13px; height: 13px; margin-left: 8px; vertical-align: -2px; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; animation: spin .65s linear infinite; }
+
+        .modal { display: flex; opacity: 0; visibility: hidden; pointer-events: none; background: rgba(18,18,18,.58); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: opacity .28s ease, visibility .28s ease; }
+        .modal.open { opacity: 1; visibility: visible; pointer-events: auto; }
+        .modal-content { box-shadow: 0 24px 70px rgba(0,0,0,.18); transform: translate3d(0,16px,0) scale(.985); transition: transform .35s var(--ease-premium); }
+        .modal.open .modal-content { transform: translate3d(0,0,0) scale(1); }
+        .close-modal { width: 34px; height: 34px; border-radius: 50%; transition: background .25s ease, transform .25s var(--ease-premium); }
+        .close-modal:hover { background: var(--bg-light); transform: rotate(90deg); }
+
+        .cart-items-container, .summary-box, .noon-tracker { box-shadow: 0 4px 16px rgba(26,26,26,.035); }
+        .cart-item { transition: background-color .25s ease, transform .25s var(--ease-premium); }
+        .cart-item:hover { background: rgba(139,111,78,.035); transform: translateX(3px); }
+        footer { background: linear-gradient(180deg, #fff 0%, #fcfaf8 100%); }
+        .footer-section ul li a { transition: color .25s ease, padding-left .25s var(--ease-premium); }
+        .footer-section ul li a:hover { color: var(--primary-color); padding-left: 4px; }
+
+        .reveal-on-scroll { opacity: 0; transform: translate3d(0,18px,0); transition: opacity .65s ease, transform .65s var(--ease-premium); }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translate3d(0,0,0); }
+        .product-card.reveal-on-scroll:nth-child(2n), .category-card.reveal-on-scroll:nth-child(2n) { transition-delay: 70ms; }
+        .product-card.reveal-on-scroll:nth-child(3n), .category-card.reveal-on-scroll:nth-child(3n) { transition-delay: 110ms; }
+
+        @keyframes announcementSheen { 0%, 68% { left: -22%; } 100% { left: 120%; } }
+        @keyframes countBump { 0% { transform: scale(1); } 45% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 900px) {
+            .hero { padding: 58px 0 40px; }
+            .product-card:hover { transform: translate3d(0,-4px,0); }
+        }
+
+
+        /* Inventory dashboard */
+        .inventory-dashboard { margin: 24px 0 32px; }
+        .inventory-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+        .inventory-kpi { padding: 16px; border: 1px solid var(--border-color); border-radius: 12px; background: #fff; }
+        .inventory-kpi span { display: block; color: var(--text-gray); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+        .inventory-kpi strong { display: block; font-size: 26px; margin-top: 6px; }
+        .inventory-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 18px 0; }
+        .inventory-toolbar input, .inventory-toolbar select, .inventory-toolbar button, .quick-add-form input, .quick-add-form select { min-height: 40px; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; }
+        .inventory-toolbar input { flex: 1; min-width: 220px; }
+        .inventory-toolbar button, .quick-add-form button { cursor: pointer; background: var(--text-dark); color: #fff; border-color: var(--text-dark); font-weight: 600; }
+        .inventory-toolbar button.secondary { background: #fff; color: var(--text-dark); }
+        .inventory-table-wrap { overflow-x: auto; border: 1px solid var(--border-color); border-radius: 12px; }
+        .inventory-table { width: 100%; border-collapse: collapse; min-width: 820px; }
+        .inventory-table th, .inventory-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-color); text-align: left; white-space: nowrap; }
+        .inventory-table th { background: #fafafa; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-gray); }
+        .inventory-table tr:last-child td { border-bottom: 0; }
+        .inventory-table input[type=number] { width: 78px; padding: 7px; border: 1px solid var(--border-color); border-radius: 6px; }
+        .inventory-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+        .inventory-badge.in { color: #177245; background: #e8f8f0; }
+        .inventory-badge.low { color: #a85b00; background: #fff3df; }
+        .inventory-badge.out { color: #b42318; background: #fdeaea; }
+        .stock-stepper { display: inline-flex; align-items: center; gap: 5px; }
+        .stock-stepper button { width: 28px; height: 28px; border: 1px solid var(--border-color); border-radius: 6px; background: #fff; cursor: pointer; }
+        .quick-add-panel { margin-top: 22px; padding: 18px; border: 1px solid var(--border-color); border-radius: 12px; background: #fcfbf9; }
+        .quick-add-panel h3 { margin-bottom: 12px; }
+        .quick-add-form { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 9px; }
+        .quick-add-form textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; resize: vertical; font: inherit; grid-column: span 3; }
+        .file-upload-field { min-height: 40px; padding: 9px 12px; border: 1px dashed var(--primary-color); border-radius: 8px; background: #fffaf6; cursor: pointer; color: var(--text-dark); font-size: 13px; grid-column: span 2; }
+        .file-upload-field input { display: block; width: 100%; margin-top: 6px; font-size: 11px; }
+        .quick-add-form button { grid-column: span 1; }
+        .inventory-note { color: var(--text-gray); font-size: 12px; margin-top: 10px; }
+        .admin-tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 18px; }
+        .admin-tab { border: 0; background: transparent; padding: 10px 14px; cursor: pointer; font-weight: 700; color: var(--text-gray); border-bottom: 2px solid transparent; }
+        .admin-tab.active { color: var(--text-dark); border-bottom-color: var(--secondary-color); }
+        @media (max-width: 800px) { .inventory-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .quick-add-form { grid-template-columns: repeat(2, minmax(0, 1fr)); } .quick-add-form textarea, .file-upload-field, .quick-add-form button { grid-column: span 2; } }
+        @media (max-width: 480px) { .inventory-kpis { grid-template-columns: 1fr 1fr; } .inventory-kpi strong { font-size: 21px; } }
+
+
+        /* Floating customer service widget */
+        .support-launcher { position: fixed; right: 22px; bottom: 22px; z-index: 1200; border: 0; border-radius: 999px; background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); color: #fff; box-shadow: 0 12px 28px rgba(26,26,26,.22); padding: 12px 17px 12px 13px; display: inline-flex; align-items: center; gap: 9px; cursor: pointer; font-weight: 700; }
+        .support-launcher i { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.2); font-size: 17px; }
+        .support-launcher::after { content: ''; position: absolute; top: 3px; left: 7px; width: 8px; height: 8px; border-radius: 50%; background: #7dffb2; box-shadow: 0 0 0 0 rgba(125,255,178,.65); animation: supportPulse 2s infinite; }
+        .support-drawer { position: fixed; right: 22px; bottom: 88px; z-index: 1199; width: min(390px, calc(100vw - 28px)); max-height: min(680px, calc(100vh - 110px)); display: flex; flex-direction: column; overflow: hidden; background: #fff; border: 1px solid var(--border-color); border-radius: 18px; box-shadow: 0 24px 70px rgba(0,0,0,.24); opacity: 0; visibility: hidden; transform: translateY(18px) scale(.97); transition: opacity .25s ease, transform .25s ease, visibility .25s; }
+        .support-drawer.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .support-header { padding: 16px 17px; color: #fff; background: linear-gradient(135deg, #242424, #4b4037); display: flex; justify-content: space-between; align-items: center; }
+        .support-header h3 { font-size: 16px; margin: 0; }
+        .support-online { font-size: 11px; color: #bafbd0; margin-top: 3px; }
+        .support-online i { font-size: 8px; margin-right: 4px; }
+        .support-close { border: 0; background: transparent; color: #fff; font-size: 22px; cursor: pointer; }
+        .support-history { flex: 1; min-height: 180px; max-height: 330px; overflow-y: auto; padding: 15px; background: #faf9f7; }
+        .support-message { max-width: 86%; margin-bottom: 10px; padding: 10px 12px; border-radius: 13px; font-size: 13px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .support-message.customer { margin-left: auto; color: #fff; background: var(--primary-color); border-bottom-right-radius: 4px; }
+        .support-message.agent { margin-right: auto; background: #fff; border: 1px solid var(--border-color); border-bottom-left-radius: 4px; }
+        .support-compose { padding: 12px; border-top: 1px solid var(--border-color); background: #fff; }
+        .support-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 8px; }
+        .support-compose input, .support-compose textarea { width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 9px 10px; font: inherit; font-size: 12px; outline: none; }
+        .support-compose textarea { min-height: 62px; resize: vertical; }
+        .support-compose input:focus, .support-compose textarea:focus { border-color: var(--primary-color); }
+        .support-send-row { display: flex; gap: 7px; margin-top: 8px; }
+        .support-send-row button { flex: 1; min-height: 38px; border: 0; border-radius: 8px; cursor: pointer; font-weight: 700; }
+        .support-send-btn { color: #fff; background: var(--text-dark); }
+        .support-whatsapp-btn { color: #176b3a; background: #e8f8f0; }
+        .support-footnote { color: var(--text-light); font-size: 10px; margin-top: 7px; text-align: center; }
+        .mobile-menu-toggle { display: none; border: 1px solid var(--border-color); background: #fff; color: var(--text-dark); border-radius: 8px; width: 40px; height: 40px; cursor: pointer; font-size: 18px; }
+        .mobile-menu-toggle:active { background: var(--bg-light); }
+        @keyframes supportPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(125,255,178,.65); } 50% { box-shadow: 0 0 0 6px rgba(125,255,178,0); } }
+        @media (max-width: 480px) { .support-launcher { right: 14px; bottom: 14px; } .support-launcher span { display: none; } .support-launcher { padding: 9px; } .support-drawer { right: 14px; bottom: 72px; } }
+
+        /* Phone compatibility layer */
+        @media (max-width: 600px) {
+            html, body { width: 100%; min-width: 0; overflow-x: hidden; }
+            .container { width: 100%; padding-left: 16px; padding-right: 16px; }
+            .announcement-bar { padding: 8px 12px; font-size: 10px; letter-spacing: .55px; line-height: 1.35; }
+            .header-top { padding: 9px 0; }
+            .header-content { position: relative; align-items: center; flex-wrap: wrap; gap: 7px; }
+            .logo { flex: 0 0 auto; gap: 5px; }
+            .logo svg { width: 64px; height: 48px; }
+            .mobile-menu-toggle { display: grid; place-items: center; order: 2; margin-left: auto; }
+            .header-nav { flex: 0 0 auto; min-width: 0; gap: 9px; justify-content: flex-end; order: 3; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 1001; flex-direction: column; align-items: stretch; gap: 0; width: 100%; padding: 7px 16px 12px; background: rgba(255,255,255,.98); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); box-shadow: 0 12px 22px rgba(26,26,26,.10); }
+            .nav-links.mobile-open { display: flex; }
+            .nav-links li { width: 100%; }
+            .nav-links a { display: block; font-size: 12px; letter-spacing: .4px; white-space: nowrap; padding: 12px 4px; border-bottom: 1px solid #f0f0f0; }
+            .nav-links li:last-child a { border-bottom: 0; }
+            .nav-links a::after { display: none; }
+            .header-icons { gap: 15px; }
+            .header-icons button { font-size: 18px; }
+            .hero { padding: 44px 0 30px; }
+            .hero h1 { font-size: clamp(26px, 8vw, 36px); line-height: 1.12; letter-spacing: 1px; }
+            .hero p { font-size: 14px; line-height: 1.45; }
+            .deal-banner { margin-bottom: 8px; padding: 10px 12px; font-size: 12px; line-height: 1.45; }
+            .categories-section { padding: 28px 0 36px; }
+            .shop-section, .wishlist-section { padding: 28px 0 48px; }
+            .section-title { margin-bottom: 22px; }
+            .section-title h2 { font-size: 21px; line-height: 1.25; }
+            .categories-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+            .category-card { padding: 18px 8px; min-height: 130px; }
+            .category-icon { font-size: 28px; margin-bottom: 9px; }
+            .category-card h3 { font-size: 12px; line-height: 1.25; }
+            .category-card p { font-size: 11px; line-height: 1.3; }
+            .search-container { margin-bottom: 22px; gap: 8px; }
+            .search-bar { min-width: 0; width: 100%; padding: 4px 12px; }
+            .search-bar input { min-width: 0; font-size: 14px; }
+            .shop-header { margin-bottom: 18px; font-size: 12px; }
+            .show-all-btn { padding: 8px 11px; }
+            .products-grid { grid-template-columns: 1fr; gap: 15px; }
+            .product-card { min-width: 0; }
+            .product-image { height: 205px; }
+            .product-info { padding: 15px; }
+            .product-info h3 { font-size: 16px; }
+            .product-card-actions, .detail-actions { align-items: stretch; }
+            .add-to-cart, .view-details-btn { min-height: 44px; }
+            .select-group select { min-height: 40px; }
+            .modal { align-items: flex-start; padding: 10px 0; overflow-y: auto; }
+            .modal-content, .promo-popup-content { width: calc(100% - 20px) !important; max-width: none !important; max-height: calc(100vh - 20px); padding: 22px 16px; border-radius: 14px; margin: 0 auto; }
+            .close-modal { top: 10px; right: 10px; width: 36px; height: 36px; z-index: 2; background: rgba(248,248,248,.9); }
+            .product-detail-container { grid-template-columns: 1fr; gap: 16px; margin-top: 8px; }
+            .detail-main-img { height: min(58vw, 270px); min-height: 190px; }
+            .detail-info h2 { font-size: 20px; padding-right: 26px; }
+            .detail-price { font-size: 22px; }
+            .detail-actions { flex-direction: column; }
+            .reviews-header { align-items: flex-start; flex-direction: column; gap: 10px; }
+            .reviews-header .add-to-cart { width: 100% !important; }
+            .cart-items-container { max-height: 32vh; padding: 10px; }
+            .cart-item { align-items: flex-start; gap: 8px; }
+            .cart-item-info { min-width: 0; flex: 1; }
+            .cart-item-info h4 { font-size: 13px; overflow-wrap: anywhere; }
+            .cart-controls { flex-shrink: 0; gap: 5px; }
+            .summary-row { gap: 12px; font-size: 13px; }
+            .payment-options { gap: 8px; }
+            .payment-card { padding: 10px 6px; font-size: 12px; }
+            .form-row { flex-direction: column; gap: 0; }
+            .form-group input, .form-group textarea, .form-group select { font-size: 16px; }
+            .tracking-steps { margin: 22px -4px; }
+            .step-label { font-size: 10px; }
+            .step-icon { width: 36px; height: 36px; font-size: 13px; }
+            .tracking-steps::before, .tracking-progress-line { top: 16px; }
+            .admin-modal-content { width: calc(100% - 12px) !important; padding: 17px 10px; }
+            .admin-modal-content h2 { font-size: 18px; padding-right: 25px; }
+            .admin-tabs { overflow-x: auto; }
+            .admin-tab { flex: 0 0 auto; font-size: 12px; padding: 9px 10px; }
+            .inventory-toolbar { align-items: stretch; }
+            .inventory-toolbar input, .inventory-toolbar select, .inventory-toolbar button { width: 100%; min-width: 0; }
+            .inventory-kpis { gap: 8px; }
+            .inventory-kpi { padding: 11px 9px; }
+            .inventory-kpi span { font-size: 9px; }
+            .inventory-kpi strong { font-size: 20px; }
+            .quick-add-form { grid-template-columns: 1fr; }
+            .quick-add-form input, .quick-add-form select, .quick-add-form textarea, .file-upload-field, .quick-add-form button { grid-column: span 1; min-width: 0; }
+            .support-drawer { width: calc(100vw - 20px); right: 10px; bottom: 68px; max-height: calc(100vh - 84px); }
+            .support-contact-grid { grid-template-columns: 1fr; }
+            footer { padding-bottom: 70px; }
+        }
+
+        @media (min-width: 601px) and (max-width: 900px) {
+            .container { padding-left: 24px; padding-right: 24px; }
+            .nav-links { gap: 14px; }
+            .nav-links a { font-size: 11px; }
+            .products-grid { gap: 16px; }
+            .product-info { padding: 15px; }
+            .product-card-actions { flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+            .reveal-on-scroll { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="modal open" id="promoPopupModal">
+        <div class="modal-content promo-popup-content">
+            <button class="close-modal" onclick="closeModal('promoPopupModal')">&times;</button>
+            <div class="promo-badge"><i class="fas fa-tags"></i> Limited Time Offer / عرض محدود</div>
+            
+            <h2 style="font-size: 24px; margin-bottom: 10px; color: var(--text-dark);">Apparels Special Deals</h2>
+            <p style="font-size: 15px; color: var(--text-gray); margin-bottom: 15px; font-weight: 600;">
+                Buy 2 apparels get 10% off, buy three or more get 20% off.
+            </p>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+            <h2 style="font-size: 24px; margin-bottom: 10px; color: var(--text-dark); direction: rtl;">عروض الملابس الخاصة</h2>
+            <p style="font-size: 15px; color: var(--text-gray); margin-bottom: 25px; font-weight: 600; direction: rtl;">
+                اشتري قطعتين ملابس واحصل على خصم 10%، اشتري 3 قطع أو أكثر واحصل على خصم 20%، وهكذا.
+            </p>
+
+            <button class="add-to-cart" style="padding: 14px 30px; font-size: 15px; border-radius: 30px;" onclick="closeModal('promoPopupModal'); scrollToSection('shop');">
+                Shop Apparels Now / تسوق الملابس الآن
+            </button>
+        </div>
+    </div>
+
+    <div class="announcement-bar">
+        Cash on Delivery & Visa Available Across Egypt | Quality Medical Supplies
+    </div>
+
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo" id="logoBtn" onclick="scrollToSection('home')">
+                        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="30" width="25" height="70" fill="none" stroke="#333" stroke-width="3" rx="3"/>
+                            <rect x="12.5" y="65" width="20" height="35" fill="#E67E50" opacity="0.8"/>
+                            <path d="M55 25 L55 45 Q55 50 60 55 L75 85 Q80 95 70 95 L60 95 Q50 95 55 85 L70 55 Q75 50 75 45 L75 25 Z" fill="none" stroke="#333" stroke-width="3"/>
+                            <text x="115" y="55" font-family="cursive" font-size="32" fill="#8B6F4E">Kiro</text>
+                            <text x="115" y="105" font-family="cursive" font-size="28" fill="#8B6F4E">med</text>
+                        </svg>
+                    </div>
+
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleMobileMenu()" aria-label="Open navigation menu" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <nav class="header-nav">
+                        <ul class="nav-links">
+                            <li><a href="#" onclick="scrollToSection('home')">Home</a></li>
+                            <li><a href="#" onclick="scrollToSection('categories')">Categories</a></li>
+                            <li><a href="#" onclick="scrollToSection('shop')">Shop All</a></li>
+                            <li><a href="#" onclick="scrollToSection('wishlist')">Wishlist</a></li>
+                            <li><a href="#" onclick="openTrackModalAuto()">Track Order</a></li>
+                        </ul>
+
+                        <div class="header-icons">
+                            <button id="wishlistIconBtn" onclick="scrollToSection('wishlist')" title="Wishlist">
+                                <i class="fas fa-heart"></i>
+                                <span class="icon-count" id="wishlistCount">0</span>
+                            </button>
+                            <button id="cartBtn" onclick="openModal('checkoutModal')" title="Cart">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span class="icon-count" id="cartCount">0</span>
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Medical Supply Stores</h1>
+            <p>Quality products, professional services trusted by healthcare providers.</p>
+            
+            <div class="deal-banner">
+                <i class="fas fa-tags"></i> Apparels Special Deals: Buy 2 apparels get 10% off, buy three or more get 20% off!
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Categories</h2>
+            </div>
+
+            <div class="categories-grid" id="categoriesGridContainer">
+                <div class="category-card" onclick="filterCategory('diagnostic')">
+                    <div class="category-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3>Diagnostic Tools</h3>
+                    <p>Stethoscopes, BP monitors & kits</p>
+                </div>
+
+                <div class="category-card" onclick="filterCategory('dissecting')">
+                    <div class="category-icon"><i class="fas fa-cut"></i></div>
+                    <h3>Dissecting Kits</h3>
+                    <p>Scalpels, forceps & accessories</p>
+                </div>
+
+                <div class="category-card" onclick="filterCategory('apparel')">
+                    <div class="category-icon"><i class="fas fa-user-md"></i></div>
+                    <h3>Medical Apparels</h3>
+                    <p>Lab coats, scrubs & protection</p>
+                </div>
+
+                <div class="category-card" onclick="filterCategory('disposable')">
+                    <div class="category-icon"><i class="fas fa-syringe"></i></div>
+                    <h3>Disposables</h3>
+                    <p>Gloves, syringes & masks</p>
+                </div>
+
+                <div class="category-card show-all-card" id="showAllCategoryCard" onclick="resetFilter(); scrollToSection('shop');">
+                    <div class="category-icon"><i class="fas fa-th-large" style="color: var(--secondary-color);"></i></div>
+                    <h3>Show All Products</h3>
+                    <p>View complete catalog of items</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="shop-section" id="shop">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search products by name or category..." oninput="searchProducts()">
+                </div>
+                <select id="brandFilterSelect" class="brand-filter-select" onchange="filterBrand(this.value)">
+                    <option value="all">All Types</option>
+                    <option value="Dr. Brand">Scrups</option>
+                    <option value="Lab coats">Lab Coats</option>
+                </select>
+            </div>
+
+            <div class="shop-header">
+                <div id="resultsCount">Showing all products</div>
+                <button class="show-all-btn" onclick="resetFilter()">Show All</button>
+            </div>
+
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </section>
+
+    <section class="wishlist-section" id="wishlist">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-heart" style="color: var(--danger);"></i> My Wishlist</h2>
+                <p style="color: var(--text-gray); font-size: 14px;">Products you've saved to purchase later.</p>
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;" id="wishlistHeaderActions">
+                <button class="view-details-btn" onclick="clearWishlist()"><i class="fas fa-trash"></i> Clear Wishlist</button>
+            </div>
+
+            <div class="products-grid" id="wishlistGrid"></div>
+        </div>
+    </section>
+
+    <footer id="mainFooter">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Kiromed</h3>
+                    <p>Your trusted provider for medical student gear and clinical equipment.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Customer Care</h3>
+                    <ul>
+                        <li><a href="#" onclick="openTrackModalAuto()">Track Order</a></li>
+                        <li><a href="#" onclick="openModal('shippingModal')">Shipping Info & Returns</a></li>
+                        <li><a href="#" onclick="openModal('faqModal')">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Payment Options</h3>
+                    <p>Cash on Delivery (COD) & Visa / Card payment options supported.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; border-top: 1px solid var(--border-color); padding-top: 20px; color: var(--text-light); font-size: 12px;">
+                <p>&copy; 2026 Kiromed Medical Supplies. All rights reserved. <span class="secret-footer-trigger" onclick="handleSecretClick()" title="">.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="close-modal" onclick="closeModal('adminLoginModal')">&times;</button>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <i class="fas fa-user-shield" style="font-size: 40px; color: var(--primary-color);"></i>
+                <h2>Admin Login</h2>
+                <p style="font-size: 12px; color: var(--text-gray);">Enter secret credentials to manage orders</p>
+            </div>
+            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="adminUsername" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="submit-btn">Access Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="adminDashboardModal">
+        <div class="modal-content admin-modal-content">
+            <button class="close-modal" onclick="closeModal('adminDashboardModal')">&times;</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; gap: 12px;">
+                <div><h2><i class="fas fa-shield-alt"></i> Kiromed Admin Console</h2><p class="inventory-note">Inventory changes are persisted locally and reflected on the storefront immediately.</p></div>
+                <button class="view-details-btn" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('inventory', this)"><i class="fas fa-boxes"></i> Inventory</button>
+                <button class="admin-tab" onclick="switchAdminTab('orders', this)"><i class="fas fa-receipt"></i> Orders</button>
+            </div>
+
+            <section id="inventoryAdminTab" class="inventory-dashboard">
+                <div class="inventory-kpis">
+                    <div class="inventory-kpi"><span>Total SKUs</span><strong id="inventoryTotalCount">0</strong></div>
+                    <div class="inventory-kpi"><span>In stock</span><strong id="inventoryInStockCount">0</strong></div>
+                    <div class="inventory-kpi"><span>Low stock</span><strong id="inventoryLowStockCount">0</strong></div>
+                    <div class="inventory-kpi"><span>Out of stock</span><strong id="inventoryOutStockCount">0</strong></div>
+                </div>
+                <div class="inventory-toolbar">
+                    <input type="search" id="inventorySearchInput" placeholder="Search product name or SKU..." oninput="renderAdminInventory()">
+                    <select id="inventoryStatusFilter" onchange="renderAdminInventory()"><option value="all">All statuses</option><option value="in">In Stock</option><option value="low">Low Stock</option><option value="out">Out of Stock</option></select>
+                    <button onclick="document.getElementById('inventoryImportFile').click()"><i class="fas fa-file-import"></i> Import CSV / Excel</button>
+                    <input id="inventoryImportFile" type="file" accept=".csv,.xlsx,.xls" hidden onchange="importInventoryFile(event)">
+                    <button class="secondary" onclick="exportInventoryCSV()"><i class="fas fa-file-export"></i> Export CSV</button>
+                </div>
+                <div class="inventory-table-wrap"><table class="inventory-table"><thead><tr><th>Product</th><th>Category</th><th>SKU</th><th>Unit price</th><th>Quantity</th><th>Threshold</th><th>Status</th><th>Quick update</th><th>Actions</th></tr></thead><tbody id="inventoryTableBody"></tbody></table></div>
+                <div class="quick-add-panel"><h3><i class="fas fa-plus-circle"></i> Quick-add product</h3><form class="quick-add-form" onsubmit="quickAddProduct(event)"><input id="quickProductName" placeholder="Product name" required><input id="quickProductSku" placeholder="SKU" required><select id="quickProductCategory"><option value="diagnostic">Diagnostic</option><option value="dissecting">Dissecting</option><option value="apparel">Apparel</option><option value="disposable">Disposable</option></select><input id="quickProductPrice" type="number" min="0" placeholder="Unit price" required><input id="quickProductQty" type="number" min="0" placeholder="Initial qty" required><input id="quickProductThreshold" type="number" min="0" value="5" placeholder="Low threshold"><textarea id="quickProductImageUrls" rows="3" placeholder="Image URLs — one per line, up to 40"></textarea><label class="file-upload-field"><i class="fas fa-images"></i> Select images from this computer<input id="quickProductFiles" type="file" accept="image/*" multiple onchange="limitProductImageFiles(this)"></label><button type="submit"><i class="fas fa-save"></i> Add product</button></form><p class="inventory-note">Add up to 40 image URLs and/or 40 local image files. Local images are stored in this browser as product gallery data; a production backend should upload them to permanent media storage.</p></div>
+            </section>
+
+            <section id="ordersAdminTab" style="display:none;">
+                <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;"><input type="text" id="adminSearchInput" placeholder="Search orders by customer name, phone, or order ID..." oninput="renderAdminOrders()" style="flex: 1; min-width: 220px; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px;"><select id="adminStatusFilter" onchange="renderAdminOrders()" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 5px;"><option value="all">All Statuses</option><option value="Placed">Placed</option><option value="Processing">Processing</option><option value="Out for Delivery">Out for Delivery</option><option value="Delivered">Delivered</option></select></div>
+                <div style="overflow-x: auto;"><table class="admin-table"><thead><tr><th>Order Code</th><th>Date</th><th>Customer Info</th><th>Address & Region</th><th>Items & Total</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminOrdersTableBody"></tbody></table></div>
+            </section>
+        </div>
+    </div>
+
+    <div class="modal" id="adminOrderDetailModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="close-modal" onclick="closeModal('adminOrderDetailModal')">&times;</button>
+            <h2>Order Details <span id="viewOrderCode"></span></h2>
+            <hr style="margin: 15px 0;">
+
+            <div id="viewOrderContent" style="font-size: 14px; line-height: 1.8;">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="productDetailModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('productDetailModal')">&times;</button>
+            
+            <div class="product-detail-container" id="productDetailContainer">
+            </div>
+
+            <div class="reviews-section" id="reviewsPort">
+                <div class="reviews-header">
+                    <h3><i class="fas fa-star" style="color: #f39c12;"></i> Customer Reviews & Ratings</h3>
+                    <button class="add-to-cart" style="width: auto; padding: 6px 14px; font-size: 12px;" onclick="openReviewModal()">Review this product</button>
+                </div>
+                <div id="reviewsList">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="writeReviewModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="close-modal" onclick="closeModal('writeReviewModal')">&times;</button>
+            <h2>Rate & Review Product</h2>
+            <p id="reviewEligibilityMessage" style="font-size: 13px; color: var(--text-gray); margin-bottom: 15px;">Verified buyers can share their experience with this item.</p>
+
+            <form id="reviewForm" onsubmit="submitProductReview(event)">
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" id="reviewAuthor" required placeholder="e.g. Dr. Ahmed Hassan">
+                </div>
+
+                <div class="form-group">
+                    <label>Rating *</label>
+                    <div class="star-rating-input" id="starRatingSelector">
+                        <i class="fas fa-star" data-rating="1" onclick="selectStarRating(1)"></i>
+                        <i class="fas fa-star" data-rating="2" onclick="selectStarRating(2)"></i>
+                        <i class="fas fa-star" data-rating="3" onclick="selectStarRating(3)"></i>
+                        <i class="fas fa-star" data-rating="4" onclick="selectStarRating(4)"></i>
+                        <i class="fas fa-star" data-rating="5" onclick="selectStarRating(5)"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Review Details *</label>
+                    <textarea id="reviewComment" rows="3" required placeholder="Write your feedback regarding build quality, accuracy, delivery, etc."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="reviewEligibleModal">
+        <div class="modal-content" style="max-width: 560px;">
+            <button class="close-modal" onclick="closeModal('reviewEligibleModal')">&times;</button>
+            <h2><i class="fas fa-star" style="color:#f39c12;"></i> Review your purchase</h2>
+            <p style="font-size:13px;color:var(--text-gray);margin:8px 0 18px;">Thank you for ordering. Choose a purchased product below to share verified feedback.</p>
+            <div id="eligibleReviewProducts"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="trackModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('trackModal')">&times;</button>
+            <h2>Track Your Order</h2>
+            <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 20px;">Real-time delivery status for your recent order.</p>
+
+            <div id="manualTrackForm" style="display: none;">
+                <div class="form-group">
+                    <label>Order Number</label>
+                    <input type="text" id="trackOrderId" placeholder="e.g. KERO-1024">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="trackPhone" placeholder="Enter phone number used at checkout">
+                </div>
+                <button class="submit-btn" onclick="trackOrderManual()">Track Order</button>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="#" onclick="showAutoTrackView()" style="font-size: 12px; color: var(--primary-color);">Switch to active order on this phone</a>
+                </div>
+            </div>
+
+            <div class="noon-tracker" id="trackingResult" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div>
+                        <strong style="font-size: 16px;" id="trackedOrderCodeDisplay">Order #KERO-1024</strong>
+                        <div style="font-size: 12px; color: var(--text-gray);">Estimated Delivery: 1-2 Business Days</div>
+                    </div>
+                    <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;" id="trackedStatusDisplay">Processing</span>
+                </div>
+
+                <div class="tracking-steps">
+                    <div class="tracking-progress-line" id="progressLine" style="width: 33%;"></div>
+                    <div class="step-item" id="stepPlaced">
+                        <div class="step-icon"><i class="fas fa-check"></i></div>
+                        <div class="step-label">Placed</div>
+                    </div>
+                    <div class="step-item" id="stepProcessing">
+                        <div class="step-icon"><i class="fas fa-box"></i></div>
+                        <div class="step-label">Processing</div>
+                    </div>
+                    <div class="step-item" id="stepShipping">
+                        <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
+                        <div class="step-label">Out for Delivery</div>
+                    </div>
+                    <div class="step-item" id="stepDelivered">
+                        <div class="step-icon"><i class="fas fa-home"></i></div>
+                        <div class="step-label">Delivered</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px;">
+                    <button class="view-details-btn" style="font-size: 12px;" onclick="showManualTrackForm()">Track a different order / from another phone</button>
+                </div>
+            </div>
+
+            <div id="noActiveOrderView" style="display: none; text-align: center; padding: 20px 0;">
+                <i class="fas fa-box-open" style="font-size: 40px; color: var(--text-light); margin-bottom: 10px;"></i>
+                <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 15px;">No active order found on this device.</p>
+                <button class="submit-btn" style="width: auto; padding: 8px 20px;" onclick="showManualTrackForm()">Enter Order Code Manually</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('checkoutModal')">&times;</button>
+            <h2>Your Cart & Checkout</h2>
+
+            <div class="cart-items-container" id="cartItemsList">
+            </div>
+
+            <div class="form-group">
+                <label>Delivery Region / Location *</label>
+                <select id="shippingLocation" onchange="updateCartSummary()">
+                    <option value="minya">Minya / New Minya (30 EGP Shipping)</option>
+                    <option value="outside">Outside Minya Region (150 EGP Shipping)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Select Payment Method *</label>
+                <div class="payment-options">
+                    <div class="payment-card active" id="payCodCard" onclick="selectPaymentMethod('cod')">
+                        <i class="fas fa-money-bill-wave" style="font-size: 20px; color: var(--success);"></i>
+                        <div style="font-size: 13px; font-weight: 600; margin-top: 5px;">Cash on Delivery</div>
+                    </div>
+                    <div class="payment-card" id="payVisaCard" onclick="selectPaymentMethod('visa')">
+                        <i class="fab fa-cc-visa" style="font-size: 20px; color: #1a1f71;"></i>
+                        <div style="font-size: 13px; font-weight: 600; margin-top: 5px;">Visa / Card</div>
+                        <small style="color: var(--secondary-color); font-size: 10px;">30% OFF Shipping</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visa-fields" id="visaFields">
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <label>Cardholder Name</label>
+                    <input type="text" id="visaName" placeholder="Name on card">
+                </div>
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <label>Card Number</label>
+                    <input type="text" id="visaNum" placeholder="4532 XXXX XXXX XXXX" maxlength="19">
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label>CVV</label>
+                        <input type="password" placeholder="123" maxlength="4">
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span>Products Subtotal:</span>
+                    <span id="subtotalAmount">0 EGP</span>
+                </div>
+                <div class="summary-row" id="wearableDiscountRow" style="display: none; color: var(--success);">
+                    <span id="wearableDiscountLabel">Apparel Bundle Discount:</span>
+                    <span id="wearableDiscountAmount">-0 EGP</span>
+                </div>
+                <div class="summary-row">
+                    <span>Base Shipping Fee:</span>
+                    <span id="shippingFeeAmount">30 EGP</span>
+                </div>
+                <div class="summary-row" id="discountRow" style="display: none; color: var(--success);">
+                    <span>Visa Discount (30% off shipping):</span>
+                    <span id="discountAmount">-0 EGP</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total Amount:</span>
+                    <span id="totalAmount">0 EGP</span>
+                </div>
+            </div>
+
+            <form id="checkoutForm" onsubmit="handleCheckout(event)">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="custName" required placeholder="Enter full name">
+                </div>
+                <div class="form-group">
+                    <label>Primary Phone Number *</label>
+                    <input type="tel" id="custPhone" required placeholder="01XXXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Alternative Phone Number * (Backup)</label>
+                    <input type="tel" id="custAltPhone" required placeholder="In case primary phone is locked or unreachable">
+                </div>
+                <div class="form-group">
+                    <label>Detailed Address *</label>
+                    <textarea id="custAddress" required rows="2" placeholder="Building/Villa number, floor, apartment number, street name"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Instructions / Comments (Optional)</label>
+                    <textarea id="custNotes" rows="2" placeholder="e.g. Leave in front of home, deliver to specific villa, etc."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Email Address (Optional)</label>
+                    <input type="email" id="custEmail" placeholder="For instant tracking updates">
+                </div>
+                <button type="submit" class="submit-btn" id="submitOrderBtn">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="orderSuccessModal">
+        <div class="modal-content" style="text-align: center; max-width: 480px;">
+            <button class="close-modal" onclick="closeModal('orderSuccessModal')">&times;</button>
+            <i class="fas fa-check-circle" style="font-size: 60px; color: var(--success); margin-bottom: 15px;"></i>
+            <h2>Order Placed Successfully!</h2>
+            <p style="color: var(--text-gray); font-size: 14px; margin: 5px 0 10px;">Your Order Code is: <strong id="successOrderCode" style="color: var(--primary-color);"></strong></p>
+            <p style="color: var(--text-gray); font-size: 12px; margin-bottom: 20px;">You can track your order directly from this phone without entering any code.</p>
+            <div style="display: flex; gap: 10px;">
+                <button class="add-to-cart" onclick="closeModal('orderSuccessModal'); openPostPurchaseReviews(window.lastCompletedOrderCode);">Review Your Items</button>
+                <button class="view-details-btn" onclick="closeModal('orderSuccessModal'); openTrackModalAuto();">Track Order</button>
+                <button class="view-details-btn" onclick="closeModal('orderSuccessModal')">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="shippingModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('shippingModal')">&times;</button>
+            <h2>Shipping & Returns Info</h2>
+            <br>
+            <h4>Shipping Policy</h4>
+            <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 15px;">We deliver across all Egyptian governorates. Shipping fee for Minya and New Minya is 30 EGP, while other governorates range between 100 EGP to 250 EGP. Pay with Visa to get 30% off shipping!</p>
+            <h4>Returns & Exchange</h4>
+            <p style="color: var(--text-gray); font-size: 14px;">Unopened products can be returned within 14 days of receipt. Please ensure hygienic seals remain intact for medical safety.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="faqModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('faqModal')">&times;</button>
+            <h2>Frequently Asked Questions</h2>
+            <br>
+            <div style="margin-bottom: 15px;">
+                <strong>Q: How do I pay for my order?</strong>
+                <p style="color: var(--text-gray); font-size: 14px;">A: You can pay via Cash on Delivery or using your Visa / Credit Card. Visa payments receive 30% off shipping costs!</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong>Q: What discounts apply to medical scrubs and apparel?</strong>
+                <p style="color: var(--text-gray); font-size: 14px;">A: When purchasing wearable items, buy 2 apparels get 10% off, buy three or more get 20% off.</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong>Q: What if I am not available to answer the phone?</strong>
+                <p style="color: var(--text-gray); font-size: 14px;">A: We collect a mandatory alternative phone number to ensure your order arrives on time.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <button class="support-launcher" id="supportLauncher" onclick="toggleSupportWidget()" aria-label="Open Kiromed customer support">
+        <i class="fas fa-headset"></i><span>Need help?</span>
+    </button>
+    <aside class="support-drawer" id="supportDrawer" aria-label="Kiromed Support chat">
+        <div class="support-header"><div><h3><i class="fas fa-comments"></i> Kiromed Support</h3><div class="support-online"><i class="fas fa-circle"></i> Online — usually replies quickly</div></div><button class="support-close" onclick="toggleSupportWidget()" aria-label="Close chat">&times;</button></div>
+        <div class="support-history" id="supportHistory" aria-live="polite"></div>
+        <form class="support-compose" onsubmit="sendSupportMessage(event)">
+            <div class="support-contact-grid"><input id="supportName" placeholder="Your name (optional)"><input id="supportContact" placeholder="Phone or email (optional)"></div>
+            <textarea id="supportMessage" required maxlength="2000" placeholder="How can we help? / كيف يمكننا مساعدتك؟"></textarea>
+            <div class="support-send-row"><button class="support-send-btn" type="submit"><i class="fas fa-paper-plane"></i> Send</button><button class="support-whatsapp-btn" type="button" onclick="openSupportWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button></div>
+            <div class="support-footnote">Please do not send sensitive medical or payment information.</div>
+        </form>
+    </aside>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+        // Customer support configuration. Keep secrets on your server, never in this HTML file.
+        const SUPPORT_WEBHOOK_URL = '/api/support-message'; // Uses the included secure endpoint when deployed; keep Telegram secrets server-side.
+        const SUPPORT_WHATSAPP_NUMBER = ''; // International digits only, e.g. 2010XXXXXXX.
+        const SUPPORT_HISTORY_KEY = 'kiromed_support_chat';
+        function escapeSupportText(value) { return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char])); }
+        function getSupportHistory() { try { return JSON.parse(localStorage.getItem(SUPPORT_HISTORY_KEY) || '[]'); } catch (error) { return []; } }
+        function saveSupportHistory(history) { localStorage.setItem(SUPPORT_HISTORY_KEY, JSON.stringify(history.slice(-40))); }
+        function renderSupportHistory() { const history = getSupportHistory(); const box = document.getElementById('supportHistory'); if (!box) return; if (!history.length) history.push({ role:'agent', text:'Hi! How can we help you today? / أهلاً! كيف يمكننا مساعدتك اليوم؟' }); box.innerHTML = history.map(message => `<div class="support-message ${message.role === 'customer' ? 'customer' : 'agent'}">${escapeSupportText(message.text)}</div>`).join(''); box.scrollTop = box.scrollHeight; }
+        function toggleSupportWidget() { const drawer = document.getElementById('supportDrawer'); drawer.classList.toggle('open'); if (drawer.classList.contains('open')) { renderSupportHistory(); setTimeout(() => document.getElementById('supportMessage').focus(), 150); } }
+        async function sendSupportMessage(event) { event.preventDefault(); const input = document.getElementById('supportMessage'); const text = input.value.trim(); if (!text) return; const name = document.getElementById('supportName').value.trim(); const contact = document.getElementById('supportContact').value.trim(); const history = getSupportHistory(); history.push({ role:'customer', text }); saveSupportHistory(history); renderSupportHistory(); input.value = ''; const payload = { name: name || 'Website visitor', contact, message: text, page: window.location.href, sentAt: new Date().toISOString() }; let delivered = false; if (SUPPORT_WEBHOOK_URL) { try { const response = await fetch(SUPPORT_WEBHOOK_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) }); delivered = response.ok; } catch (error) { console.warn('Support notification webhook unavailable.', error); } } const reply = delivered ? 'Thanks for reaching out! Our team has received your message and will reply shortly.' : 'Thanks for reaching out! Your message is saved. Our team will reply shortly.'; const nextHistory = getSupportHistory(); nextHistory.push({ role:'agent', text: reply }); saveSupportHistory(nextHistory); renderSupportHistory(); }
+        function openSupportWhatsApp() { const text = document.getElementById('supportMessage').value.trim() || 'Hello Kiromed Support, I need help with my order.'; if (!SUPPORT_WHATSAPP_NUMBER) { alert('WhatsApp support is not configured yet. Please use the Send button or configure SUPPORT_WHATSAPP_NUMBER in the website settings.'); return; } window.open(`https://wa.me/${SUPPORT_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank', 'noopener'); }
+        function toggleMobileMenu() { const menu = document.querySelector('.nav-links'); const button = document.getElementById('mobileMenuToggle'); if (!menu || !button) return; const isOpen = menu.classList.toggle('mobile-open'); button.setAttribute('aria-expanded', String(isOpen)); button.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu'); button.innerHTML = `<i class="fas fa-${isOpen ? 'times' : 'bars'}"></i>`; }
+        function closeMobileMenu() { const menu = document.querySelector('.nav-links'); const button = document.getElementById('mobileMenuToggle'); if (!menu || !button) return; menu.classList.remove('mobile-open'); button.setAttribute('aria-expanded', 'false'); button.setAttribute('aria-label', 'Open navigation menu'); button.innerHTML = '<i class="fas fa-bars"></i>'; }
+
+        // MASTER SKU INVENTORY DATABASE (Initial values mapped directly from spreadsheet)
+        const initialStockData = {
+            "POLE-BLK-XL-LONG": 2,
+            "POLE-BUR-M-SHORT": 2,
+            "POLE-BUR-L-SHORT": 2,
+            "POLE-BUR-XL-SHORT": 1,
+            "POLE-OLV-3XL-SHORT": 1,
+            "POLE-DOLV-S-SHORT": 1,
+            "JAB-NVY-M-SHORT": 1,
+            "JAB-NVY-L-SHORT": 2,
+            "JAB-NVY-2XL-SHORT": 2,
+            "JAB-NVY-3XL-SHORT": 1,
+            "SOFT-OLV-L-SHORT": 4,
+            "SOFT-OLV-2XL-SHORT": 2,
+            "SOFT-OLV-3XL-SHORT": 1,
+            "LIN-TRQ-L": 2,
+            "LIN-TRQ-2XL": 2,
+            "LIN-JNZ-S": 1,
+            "LIN-JNZ-M": 1,
+            "LIN-JNZ-2XL": 1,
+            "LIN-NVY-M": 1,
+            "LIN-NVY-3XL": 1,
+            "LIN-BUR-S": 1,
+            "LIN-BUR-L": 1,
+            "LIN-BUR-XL": 1,
+            "LIN-BUR-2XL": 1,
+            "CLAV-MNT-S-CUFF": 1,
+            "CLAV-MNT-S-NOCUFF": 3,
+            "CLAV-MNT-M-CUFF": 1,
+            "CLAV-MNT-M-NOCUFF": 1,
+            "CLAV-MNT-L-CUFF": 1,
+            "CLAV-MNT-L-NOCUFF": 1,
+            "CLAV-MNT-XL-CUFF": 2,
+            "CLAV-MNT-2XL-NOCUFF": 1,
+            "SUTR-KIT-STD": 5
+        };
+
+        // Load Stock from LocalStorage so inventory changes persist automatically across sessions
+        function getStockInventory() {
+            const saved = localStorage.getItem('kiromed_sku_inventory');
+            if (saved) return JSON.parse(saved);
+            localStorage.setItem('kiromed_sku_inventory', JSON.stringify(initialStockData));
+            return initialStockData;
+        }
+
+        function saveStockInventory(inv) {
+            localStorage.setItem('kiromed_sku_inventory', JSON.stringify(inv));
+        }
+
+        let stockInventory = getStockInventory();
+
+        // Helper SKU Resolver Function
+        function getSKUForVariant(productId, color, size, sleeve, cuff) {
+            const catalogProduct = products.find(p => p.id === productId);
+            if (catalogProduct?.sourceProductId) return getSKUForVariant(catalogProduct.sourceProductId, catalogProduct.fixedColor, size, sleeve, cuff);
+            if (productId === 1) { // Polestar
+                const colMap = { "Black": "BLK", "Burgundy": "BUR", "Olive Green": "OLV", "Dark Olive Green": "DOLV" };
+                const slvMap = { "Long Sleeve": "LONG", "Short Sleeve": "SHORT" };
+                return `POLE-${colMap[color] || 'BLK'}-${size || 'M'}-${slvMap[sleeve] || 'SHORT'}`;
+            } else if (productId === 2) { // Linen
+                const colMap = { "Turquoise": "TRQ", "Janzari": "JNZ", "Navy": "NVY", "Burgundy": "BUR" };
+                return `LIN-${colMap[color] || 'TRQ'}-${size || 'M'}`;
+            } else if (productId === 3) { // Jabarden
+                return `JAB-NVY-${size || 'M'}-SHORT`;
+            } else if (productId === 4) { // Clave
+                const cuffCode = cuff === "With Cuffs" ? "CUFF" : "NOCUFF";
+                return `CLAV-MNT-${size || 'M'}-${cuffCode}`;
+            } else if (productId === 5) { // Soft / Golden
+                return `SOFT-OLV-${size || 'L'}-SHORT`;
+            } else if (productId === 6) { // Kangaroo Lab Coat
+                return `LAB-GOLD-${size || 'M'}`;
+            } else if (productId === 7) { // Suture Kit
+                return `SUTR-KIT-STD`;
+            }
+            return null;
+        }
+
+        // Logic Rule: >1 = In Stock, 1 = Only 1 left, 0 = Out of Stock
+        function getVariantQuantity(sku) {
+            if (!sku || stockInventory[sku] === undefined) return 0;
+            return stockInventory[sku];
+        }
+
+        function getStockBadgeHtml(quantity) {
+            if (quantity === 0) {
+                return `<div class="stock-status-badge out-of-stock"><i class="fas fa-times-circle"></i> Out of Stock</div>`;
+            } else if (quantity === 1) {
+                return `<div class="stock-status-badge low-stock"><i class="fas fa-exclamation-triangle"></i> Only one left!</div>`;
+            } else {
+                return `<div class="stock-status-badge in-stock"><i class="fas fa-check-circle"></i> In Stock</div>`;
+            }
+        }
+
+        // MASTER PRODUCTS DATABASE ARRAY
+        const products = [
+            { 
+                id: 1, 
+                name: "Polestar", 
+                price: 550, 
+                category: "apparel", 
+                brand: "Dr. Brand",
+                isWearable: true,
+                colors: ["Black", "Burgundy", "Olive Green", "Dark Olive Green"],
+                sizes: [
+                    { symbol: "S", label: "Small (S)" },
+                    { symbol: "M", label: "Medium (M)" },
+                    { symbol: "L", label: "Large (L)" },
+                    { symbol: "XL", label: "Extra Large (XL)" },
+                    { symbol: "3XL", label: "Triple Extra Large (3XL)" }
+                ],
+                sleeves: ["Short Sleeve", "Long Sleeve"],
+                cuffs: ["-"],
+                icon: "fa-stethoscope",
+                image: "images/polester.jpeg",
+                images: [
+                    "images/polester.jpeg",
+                    "images/polester 2.jpeg",
+                    "images/IMG_1071.jpeg",
+                    "images/IMG_1064.jpeg",
+                    "images/IMG_1068.jpeg"
+                ],
+                sku: "POLESTAR-BASE",
+                description: "High acoustic sensitivity for performing exceptional clinical assessments. Features dual-tunable diaphragms and durable next-generation tubing.",
+                specs: [
+                    "Brand: Dr. Brand",
+                    "Tunable diaphragm technology",
+                    "Dual-sided stainless steel chestpiece",
+                    "Soft-sealing ear-tips",
+                    "Ideal for clinical students & physicians",
+                    "Available colors: Black, Burgundy, Olive Green, Dark Olive Green"
+                ],
+                galleryIcons: ["fa-stethoscope", "fa-heartbeat", "fa-user-md"],
+                reviews: [
+                    { author: "Dr. Mostafa Ali", rating: 5, text: "Extremely clear sound quality during clinical rounds. Highly recommended!", date: "2026-08-14" },
+                    { author: "Sara K.", rating: 5, text: "Top tier stethoscope, original quality.", date: "2026-09-02" }
+                ]
+            },
+            { 
+                id: 2, 
+                name: "Linen(كتان)", 
+                price: 450, 
+                category: "apparel", 
+                brand: "Dr. Brand",
+                isWearable: true,
+                colors: ["Turquoise", "Janzari", "Navy", "Burgundy"],
+                sizes: [
+                    { symbol: "S", label: "Small (S)" },
+                    { symbol: "M", label: "Medium (M)" },
+                    { symbol: "L", label: "Large (L)" },
+                    { symbol: "XL", label: "Extra Large (XL)" },
+                    { symbol: "2XL", label: "Double Extra Large (2XL)" },
+                    { symbol: "3XL", label: "Triple Extra Large (3XL)" }
+                ],
+                sleeves: ["-"],
+                cuffs: ["-"],
+                icon: "fa-cut",
+                image: "images/الكتان.jpeg",
+                images: [
+                    "images/الكتان.jpeg",
+                    "images/الكتان 2.jpeg",
+                    "images/الكتان 3.jpeg",
+                    "images/الكتان 4.jpeg",
+                    "images/IMG_1070.jpeg",
+                    "images/IMG_1072.jpeg",
+                    "images/IMG_1068.jpeg"
+                ],
+                sku: "LINEN-BASE",
+                description: "Premium breathable linen medical scrub for optimal comfort and airflow during long healthcare shifts.",
+                specs: [
+                    "Brand: Golden",
+                    "Breathable natural linen material",
+                    "Durable reinforced stitching",
+                    "Multiple utility pockets",
+                    "Available colors: Turquoise, Janzari, Navy, Burgundy"
+                ],
+                galleryIcons: ["fa-cut", "fa-band-aid", "fa-microscope"],
+                reviews: [
+                    { author: "Omar H.", rating: 4, text: "Good scalpels and sturdy case. Very helpful for anatomy lab.", date: "2026-07-20" }
+                ]
+            },
+            { 
+                id: 3, 
+                name: "Jabarden(جبردين)", 
+                price: 350, 
+                category: "apparel", 
+                brand: "Dr. Brand",
+                isWearable: true,
+                colors: ["Navy Blue"],
+                sizes: [
+                    { symbol: "M", label: "Medium (M)" },
+                    { symbol: "L", label: "Large (L)" },
+                    { symbol: "2XL", label: "Double Extra Large (2XL)" },
+                    { symbol: "3XL", label: "Triple Extra Large (3XL)" }
+                ],
+                sleeves: ["Short Sleeve"],
+                cuffs: ["-"],
+                icon: "fa-user-md",
+                image: "images/جبردين.jpeg",
+                images: [
+                    "images/جبردين.jpeg",
+                    "images/IMG_1067.jpeg",
+                    "images/IMG_1068.jpeg"
+                ],
+                sku: "JABARDEN-BASE",
+                description: "Tailored durable gabardine medical scrub coat with reinforced stitching, multi-pocket utility, and wrinkle-resistant fabric.",
+                specs: [
+                    "Brand: Kangaroo",
+                    "Heavy-duty gabardine fabric",
+                    "Breathable & liquid-resistant",
+                    "Chest pocket with pen slot + 2 front pockets",
+                    "Available color: Navy Blue"
+                ],
+                galleryIcons: ["fa-user-md", "fa-shirt", "fa-shield-alt"],
+                reviews: [
+                    { author: "Youssef M.", rating: 5, text: "Comfortable material and perfect fit for college labs.", date: "2026-09-10" }
+                ]
+            },
+            { 
+                id: 4, 
+                name: "Clave", 
+                price: 650, 
+                category: "apparel", 
+                brand: "Dr. Brand",
+                isWearable: true,
+                colors: ["Mint Green"],
+                sizes: [
+                    { symbol: "S", label: "Small (S)" },
+                    { symbol: "M", label: "Medium (M)" },
+                    { symbol: "L", label: "Large (L)" },
+                    { symbol: "XL", label: "Extra Large (XL)" },
+                    { symbol: "2XL", label: "Double Extra Large (2XL)" }
+                ],
+                sleeves: ["-"],
+                cuffs: ["With Cuffs", "Without Cuffs"],
+                icon: "fa-heartbeat",
+                image: "images/clave .jpeg",
+                images: [
+                    "images/clave .jpeg",
+                    "images/IMG_1066.jpeg",
+                    "images/IMG_1065.jpeg"
+                ],
+                sku: "CLAVE-BASE",
+                description: "Professional medical scrub top & apparel with premium stretch fabric for comfort during long clinical shifts.",
+                specs: [
+                    "Brand: Dr. Brand",
+                    "Soft stretch ergonomic design",
+                    "Easy care & wash material",
+                    "Ergonomic fit",
+                    "Options with or without cuffs available"
+                ],
+                galleryIcons: ["fa-heartbeat", "fa-stethoscope", "fa-briefcase-medical"],
+                reviews: [
+                    { author: "Hassan B.", rating: 4, text: "Accurate readings, sturdy pressure bulb.", date: "2026-09-01" }
+                ]
+            },
+            { 
+                id: 5, 
+                name: "Golden", 
+                price: 450, 
+                category: "apparel", 
+                brand: "Lab coats",
+                isWearable: true,
+                sizes: [
+                    { symbol: "L", label: "Large (L)" },
+                    { symbol: "2XL", label: "Double Extra Large (2XL)" },
+                    { symbol: "3XL", label: "Triple Extra Large (3XL)" }
+                ],
+                sleeves: ["Short Sleeve"],
+                cuffs: ["-"],
+                icon: "fa-heartbeat",
+                image: "images/IMG_1077.jpeg",
+                images: [
+                    "images/IMG_1077.jpeg",
+                    "images/IMG_1074.jpeg"
+                ],
+                sku: "GOLDEN-BASE",
+                description: "Soft material comfortable medical scrub top designed for continuous daily wear.",
+                specs: [
+                    "Brand: Soft",
+                    "Ultra-soft fabric touch",
+                    "Short sleeve design",
+                    "Color: Olive"
+                ],
+                galleryIcons: ["fa-heartbeat", "fa-stethoscope", "fa-briefcase-medical"],
+                reviews: [
+                    { author: "Hassan B.", rating: 4, text: "Accurate readings, sturdy pressure bulb.", date: "2026-09-01" }
+                ]
+            },
+            { 
+                id: 6, 
+                name: "Kangaroo", 
+                price: 650, 
+                category: "apparel", 
+                brand: "Lab coats",
+                isWearable: true,
+                sizes: [
+                    { symbol: "S", label: "Small (S)" },
+                    { symbol: "M", label: "Medium (M)" },
+                    { symbol: "L", label: "Large (L)" },
+                    { symbol: "XL", label: "Extra Large (XL)" }
+                ],
+                sleeves: ["Long Sleeve"],
+                cuffs: ["-"],
+                icon: "fa-heartbeat",
+                image: "images/IMG_1077.jpeg",
+                images: [
+                    "images/IMG_1077.jpeg",
+                    "images/IMG_1076.jpeg"
+                ],
+                sku: "KANGAROO-BASE",
+                description: "Professional high-quality lab coat for doctors and medical students.",
+                specs: [
+                    "Brand: Golden Lab Coats",
+                    "Durable white fabric",
+                    "Stain resistant",
+                    "Multiple utility pockets"
+                ],
+                galleryIcons: ["fa-user-md", "fa-shield-alt"],
+                reviews: []
+            },
+            { 
+                id: 7, 
+                name: "Suture Practice Kit & Pad", 
+                price: 500, 
+                category: "dissecting", 
+                brand: "Golden",
+                isWearable: false,
+                colors: [],
+                sizes: [],
+                sleeves: [],
+                cuffs: [],
+                icon: "fa-band-aid",
+                image: "",
+                images: [],
+                sku: "SUTR-KIT-STD",
+                description: "Realistic multi-layer silicone suture training pad with pre-cut wound patterns, needle driver, scissors, and suture threads.",
+                specs: [
+                    "Brand: Golden",
+                    "3-layer realistic skin silicone pad",
+                    "Includes needle holder, iris scissors & forceps",
+                    "12 suture thread packs (Nylon & Silk)",
+                    "Perfect for surgical skill practice"
+                ],
+                galleryIcons: ["fa-band-aid", "fa-cut", "fa-graduation-cap"],
+                reviews: [
+                    { author: "Kareem E.", rating: 5, text: "Silicone pad feels very realistic for practicing basic sutures.", date: "2026-09-18" }
+                ]
+            }
+        ];
+
+        function getVariantInventoryPrefix(sourceProductId) {
+            return ({ 1: 'POLE-', 2: 'LIN-', 3: 'JAB-', 4: 'CLAV-', 5: 'SOFT-', 6: 'LAB-', 7: 'SUTR-' })[sourceProductId] || '';
+        }
+
+        function getColorSkuCode(sourceProductId, color) {
+            const maps = {
+                1: { 'Black': 'BLK', 'Burgundy': 'BUR', 'Olive Green': 'OLV', 'Dark Olive Green': 'DOLV' },
+                2: { 'Turquoise': 'TRQ', 'Janzari': 'JNZ', 'Navy': 'NVY', 'Burgundy': 'BUR' },
+                3: { 'Navy Blue': 'NVY' },
+                4: { 'Mint Green': 'MNT' },
+                5: { 'Olive': 'OLV' },
+                6: { 'Gold': 'GOLD' }
+            };
+            return maps[sourceProductId]?.[color] || String(color || 'STD').toUpperCase().replace(/[^A-Z0-9]+/g, '-');
+        }
+
+        function expandColorVariantsIntoProducts() {
+            const sourceProducts = products.slice();
+            const expandedProducts = [];
+            let generatedId = 100;
+            sourceProducts.forEach(baseProduct => {
+                if (!baseProduct.colors || baseProduct.colors.length === 0) { expandedProducts.push(baseProduct); return; }
+                baseProduct.colors.forEach(color => {
+                    const sourceProductId = baseProduct.id;
+                    const colorCode = getColorSkuCode(sourceProductId, color);
+                    const clone = { ...baseProduct, id: generatedId++, name: `${baseProduct.name} — ${color}`, sku: `${baseProduct.sku}-${colorCode}`, colors: [color], images: Array.isArray(baseProduct.images) ? [...baseProduct.images] : [], reviews: Array.isArray(baseProduct.reviews) ? [...baseProduct.reviews] : [], sourceProductId, fixedColor: color, inventoryPrefix: `${getVariantInventoryPrefix(sourceProductId)}${colorCode}-`, isGeneratedVariant: true };
+                    // Only the Black Polestar receives the long-sleeve option; all Polestar colors retain short sleeve availability.
+                    if (sourceProductId === 1) clone.sleeves = color === 'Black' ? ['Short Sleeve', 'Long Sleeve'] : ['Short Sleeve'];
+                    expandedProducts.push(clone);
+                });
+            });
+            products.length = 0;
+            products.push(...expandedProducts);
+        }
+
+        expandColorVariantsIntoProducts();
+
+        let cart = [];
+        let wishlist = [];
+        let selectedPayment = 'cod';
+        let currentInspectedProductId = null;
+        let selectedUserRating = 5;
+        let currentCategoryFilter = 'all';
+        let currentBrandFilter = 'all';
+
+        let secretClickCount = 0;
+        let secretClickTimer = null;
+        let isAdminLoggedIn = false;
+
+        function loadCustomProducts() {
+            try {
+                const deletedIds = JSON.parse(localStorage.getItem('kiromed_deleted_product_ids') || '[]');
+                for (let i = products.length - 1; i >= 0; i--) if (deletedIds.includes(products[i].id)) products.splice(i, 1);
+                const overrides = JSON.parse(localStorage.getItem('kiromed_product_overrides') || '{}');
+                products.forEach(product => { if (overrides[product.id]) Object.assign(product, overrides[product.id]); });
+                const saved = JSON.parse(localStorage.getItem('kiromed_custom_products') || '[]');
+                saved.forEach(product => { if (!deletedIds.includes(product.id) && !products.some(existing => existing.sku === product.sku)) products.push(product); });
+            } catch (error) { console.warn('Could not load saved product changes.', error); }
+        }
+
+        function saveCustomProducts() {
+            localStorage.setItem('kiromed_custom_products', JSON.stringify(products.filter(product => product.id > 7 && !product.isGeneratedVariant)));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCustomProducts();
+            loadSavedReviews();
+            document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', closeMobileMenu));
+            renderProducts(products);
+            renderWishlist();
+            updateCartSummary();
+            initializeSecretTrigger();
+            initializeMotionPolish();
+        });
+
+        function initializeMotionPolish() {
+            const revealSelector = '.hero > .container, .section-title, .category-card, .search-container, .shop-header, .product-card, .footer-section';
+            const revealObserver = ('IntersectionObserver' in window) ? new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -24px' }) : null;
+
+            const observeRevealTargets = () => {
+                document.querySelectorAll(revealSelector).forEach(el => {
+                    el.classList.add('reveal-on-scroll');
+                    if (revealObserver) revealObserver.observe(el);
+                    else el.classList.add('is-visible');
+                });
+            };
+
+            observeRevealTargets();
+            ['productsGrid', 'wishlistGrid'].forEach(id => {
+                const grid = document.getElementById(id);
+                if (grid) new MutationObserver(observeRevealTargets).observe(grid, { childList: true });
+            });
+
+            document.addEventListener('click', (event) => {
+                const addButton = event.target.closest('.add-to-cart');
+                if (!addButton || addButton.disabled) return;
+                addButton.classList.add('is-loading');
+                window.setTimeout(() => addButton.classList.remove('is-loading'), 500);
+            }, true);
+        }
+
+        function initializeSecretTrigger() {
+            const footer = document.getElementById('mainFooter');
+            footer.addEventListener('click', (e) => {
+                secretClickCount++;
+                clearTimeout(secretClickTimer);
+                secretClickTimer = setTimeout(() => {
+                    secretClickCount = 0;
+                }, 1000);
+
+                if (secretClickCount >= 3) {
+                    secretClickCount = 0;
+                    openSecretAdmin();
+                }
+            });
+        }
+
+        function handleSecretClick() {
+            secretClickCount++;
+            if (secretClickCount >= 3) {
+                secretClickCount = 0;
+                openSecretAdmin();
+            }
+        }
+
+        function openSecretAdmin() {
+            if (isAdminLoggedIn) {
+                renderAdminOrders();
+                renderAdminInventory();
+                openModal('adminDashboardModal');
+            } else {
+                openModal('adminLoginModal');
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('adminUsername').value;
+            const pass = document.getElementById('adminPassword').value;
+
+            if (user === 'admin' && pass === 'admin123') {
+                isAdminLoggedIn = true;
+                closeModal('adminLoginModal');
+                document.getElementById('adminLoginForm').reset();
+                renderAdminOrders();
+                renderAdminInventory();
+                openModal('adminDashboardModal');
+            } else {
+                alert('Invalid secret administrative credentials!');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            closeModal('adminDashboardModal');
+            alert('Logged out of Admin Dashboard.');
+        }
+
+        function getStoredOrders() {
+            return JSON.parse(localStorage.getItem('kiromed_orders') || '[]');
+        }
+
+        function saveStoredOrders(orders) {
+            localStorage.setItem('kiromed_orders', JSON.stringify(orders));
+        }
+
+        function getActivePhoneOrder() {
+            return JSON.parse(localStorage.getItem('kiromed_active_order') || 'null');
+        }
+
+        function setActivePhoneOrder(orderCode, phoneNum) {
+            localStorage.setItem('kiromed_active_order', JSON.stringify({ code: orderCode, phone: phoneNum }));
+        }
+
+        const DEFAULT_LOW_STOCK_THRESHOLD = 5;
+        function getInventoryRows() {
+            const rows = [];
+            products.forEach(product => {
+                const skus = Object.keys(stockInventory).filter(sku => {
+                    if (product.id === 7) return sku === product.sku;
+                    const prefix = product.inventoryPrefix || (product.id === 1 ? 'POLE-' : product.id === 2 ? 'LIN-' : product.id === 3 ? 'JAB-' : product.id === 4 ? 'CLAV-' : product.id === 5 ? 'SOFT-' : product.id === 6 ? 'LAB-' : product.sku);
+                    return sku.startsWith(prefix);
+                });
+                (skus.length ? skus : [product.sku]).forEach(sku => rows.push({ product, sku, quantity: Number(stockInventory[sku] || 0), threshold: Number(product.lowStockThreshold ?? DEFAULT_LOW_STOCK_THRESHOLD) }));
+            });
+            return rows;
+        }
+        function getInventoryStatus(row) { return row.quantity <= 0 ? 'out' : row.quantity <= row.threshold ? 'low' : 'in'; }
+        function inventoryStatusLabel(status) { return status === 'out' ? 'Out of Stock' : status === 'low' ? 'Low Stock' : 'In Stock'; }
+        function inventoryBadge(status) { return `<span class="inventory-badge ${status}"><i class="fas ${status === 'out' ? 'fa-times-circle' : status === 'low' ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>${inventoryStatusLabel(status)}</span>`; }
+        function renderAdminInventory() {
+            const rows = getInventoryRows();
+            const q = (document.getElementById('inventorySearchInput')?.value || '').toLowerCase();
+            const filter = document.getElementById('inventoryStatusFilter')?.value || 'all';
+            const filtered = rows.filter(row => (!q || row.product.name.toLowerCase().includes(q) || row.sku.toLowerCase().includes(q)) && (filter === 'all' || getInventoryStatus(row) === filter));
+            document.getElementById('inventoryTotalCount').textContent = rows.length;
+            document.getElementById('inventoryInStockCount').textContent = rows.filter(r => getInventoryStatus(r) === 'in').length;
+            document.getElementById('inventoryLowStockCount').textContent = rows.filter(r => getInventoryStatus(r) === 'low').length;
+            document.getElementById('inventoryOutStockCount').textContent = rows.filter(r => getInventoryStatus(r) === 'out').length;
+            document.getElementById('inventoryTableBody').innerHTML = filtered.length ? filtered.map(row => { const status = getInventoryStatus(row); return `<tr><td><strong>${row.product.name}</strong></td><td>${row.product.category}</td><td><code>${row.sku}</code></td><td>${row.product.price} EGP</td><td><input type="number" min="0" value="${row.quantity}" onchange="setInventoryQuantity('${row.sku}', this.value)"></td><td>${row.threshold}</td><td>${inventoryBadge(status)}</td><td><span class="stock-stepper"><button onclick="adjustInventory('${row.sku}', -1)" title="Remove one">−</button><button onclick="adjustInventory('${row.sku}', 1)" title="Add one">+</button></span></td><td><button class="view-details-btn" style="padding:6px 8px" onclick="editProduct(${row.product.id})" title="Edit product"><i class="fas fa-pen"></i></button> <button class="view-details-btn" style="padding:6px 8px;color:var(--danger)" onclick="deleteProduct(${row.product.id})" title="Delete product"><i class="fas fa-trash"></i></button></td></tr>`; }).join('') : '<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--text-gray)">No matching inventory rows.</td></tr>';
+        }
+        function setInventoryQuantity(sku, value) { stockInventory[sku] = Math.max(0, Number.parseInt(value, 10) || 0); saveStockInventory(stockInventory); renderAdminInventory(); renderProducts(products); }
+        function adjustInventory(sku, delta) { setInventoryQuantity(sku, (stockInventory[sku] || 0) + delta); }
+        function saveProductOverrides() { const overrides = {}; products.filter(product => product.id <= 7).forEach(product => { overrides[product.id] = { name: product.name, category: product.category, price: product.price, image: product.image, lowStockThreshold: product.lowStockThreshold }; }); localStorage.setItem('kiromed_product_overrides', JSON.stringify(overrides)); }
+        function editProduct(productId) { const product = products.find(item => item.id === productId); if (!product) return; const name = prompt('Product name:', product.name); if (name === null) return; const category = prompt('Category (diagnostic, dissecting, apparel, disposable):', product.category); if (category === null) return; const price = prompt('Unit price (EGP):', product.price); if (price === null || Number.isNaN(Number(price))) return alert('Please enter a valid price.'); const threshold = prompt('Low-stock threshold:', product.lowStockThreshold ?? DEFAULT_LOW_STOCK_THRESHOLD); if (threshold === null || Number.isNaN(Number(threshold))) return alert('Please enter a valid threshold.'); const image = prompt('Image URL (leave blank to keep current image):', product.image || ''); if (image === null) return; product.name = name.trim() || product.name; product.category = category.trim().toLowerCase() || product.category; product.price = Math.max(0, Number(price)); product.lowStockThreshold = Math.max(0, Number(threshold)); if (image.trim()) product.image = image.trim(); saveCustomProducts(); saveProductOverrides(); renderAdminInventory(); renderProducts(products); }
+        function deleteProduct(productId) { const product = products.find(item => item.id === productId); if (!product || !confirm(`Delete ${product.name} and all of its inventory variants?`)) return; getInventoryRows().filter(row => row.product.id === productId).forEach(row => delete stockInventory[row.sku]); const deletedIds = JSON.parse(localStorage.getItem('kiromed_deleted_product_ids') || '[]'); if (!deletedIds.includes(productId)) deletedIds.push(productId); localStorage.setItem('kiromed_deleted_product_ids', JSON.stringify(deletedIds)); const index = products.findIndex(item => item.id === productId); if (index > -1) products.splice(index, 1); wishlist = wishlist.filter(item => item.id !== productId); cart = cart.filter(item => item.id !== productId); saveStockInventory(stockInventory); saveCustomProducts(); saveProductOverrides(); renderAdminInventory(); renderProducts(products); renderWishlist(); updateCartSummary(); alert('Product deleted from the catalog.'); }
+        function switchAdminTab(tab, button) { document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active')); button.classList.add('active'); document.getElementById('inventoryAdminTab').style.display = tab === 'inventory' ? '' : 'none'; document.getElementById('ordersAdminTab').style.display = tab === 'orders' ? '' : 'none'; if (tab === 'inventory') renderAdminInventory(); else renderAdminOrders(); }
+        function limitProductImageFiles(input) {
+            if (input.files.length > 40) {
+                alert('Please select no more than 40 images. The first 40 files will be used.');
+                const transfer = new DataTransfer();
+                Array.from(input.files).slice(0, 40).forEach(file => transfer.items.add(file));
+                input.files = transfer.files;
+            }
+        }
+        function readImageFile(file) {
+            return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); });
+        }
+        function getImageUrlsFromField(value) {
+            return value.split(/\r?\n|,/).map(url => url.trim()).filter(Boolean).slice(0, 40);
+        }
+        async function quickAddProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('quickProductName').value.trim();
+            const sku = document.getElementById('quickProductSku').value.trim();
+            if (products.some(p => p.sku === sku) || stockInventory[sku] !== undefined) return alert('A product or SKU with this value already exists.');
+            const urlImages = getImageUrlsFromField(document.getElementById('quickProductImageUrls').value);
+            const files = Array.from(document.getElementById('quickProductFiles').files).slice(0, 40);
+            let localImages = [];
+            try { localImages = await Promise.all(files.map(readImageFile)); } catch (error) { return alert('One of the selected image files could not be read.'); }
+            const images = [...new Set([...urlImages, ...localImages])].slice(0, 40);
+            const product = { id: Math.max(...products.map(p => p.id), 0) + 1, name, sku, price: Number(document.getElementById('quickProductPrice').value) || 0, category: document.getElementById('quickProductCategory').value, brand: 'Kiromed', icon: 'fa-box-open', image: images[0] || '', images, galleryIcons: ['fa-box-open'], colors: [], sizes: [], sleeves: [], cuffs: [], description: 'New product added from the admin dashboard.', specs: [], reviews: [], lowStockThreshold: Number(document.getElementById('quickProductThreshold').value) || DEFAULT_LOW_STOCK_THRESHOLD };
+            products.push(product);
+            stockInventory[sku] = Math.max(0, Number(document.getElementById('quickProductQty').value) || 0);
+            saveStockInventory(stockInventory); saveCustomProducts();
+            e.target.reset(); document.getElementById('quickProductThreshold').value = DEFAULT_LOW_STOCK_THRESHOLD;
+            renderAdminInventory(); renderProducts(products); alert(`Product added with ${images.length} image(s).`);
+        }
+        function exportInventoryCSV() { const rows = getInventoryRows(); const csv = [['name','sku','category','price','quantity','threshold','status'], ...rows.map(r => [r.product.name, r.sku, r.product.category, r.product.price, r.quantity, r.threshold, inventoryStatusLabel(getInventoryStatus(r))])].map(r => r.map(v => `"${String(v).replaceAll('"','""')}"`).join(',')).join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'})); a.download = 'kiromed-inventory.csv'; a.click(); URL.revokeObjectURL(a.href); }
+        function importInventoryFile(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = e => { try { let rows; if (file.name.match(/\.xlsx?$/i) && window.XLSX) { const wb = XLSX.read(e.target.result, {type:'array'}); rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); } else { rows = e.target.result.trim().split(/\r?\n/).map(line => line.split(',').map(v => v.replace(/^"|"$/g, '').trim())); const headers = rows.shift().map(h => h.toLowerCase()); rows = rows.map(values => Object.fromEntries(headers.map((h,i) => [h, values[i]]))); } let updated = 0; rows.forEach(r => { const sku = String(r.sku || r.SKU || '').trim(); if (!sku) return; const qty = r.quantity ?? r.stock ?? r['stock quantity']; if (qty !== undefined && !Number.isNaN(Number(qty))) { stockInventory[sku] = Math.max(0, Number.parseInt(qty, 10)); updated++; } const product = products.find(p => p.sku === sku); if (product && r.threshold !== undefined) product.lowStockThreshold = Number(r.threshold) || DEFAULT_LOW_STOCK_THRESHOLD; }); saveStockInventory(stockInventory); renderAdminInventory(); renderProducts(products); alert(`${updated} inventory row(s) imported.`); } catch (err) { alert('Could not read this file. Please use the provided CSV columns or a valid Excel workbook.'); } event.target.value = ''; }; if (file.name.match(/\.xlsx?$/i)) reader.readAsArrayBuffer(file); else reader.readAsText(file); }
+
+        function renderAdminOrders() {
+            const orders = getStoredOrders();
+            const filterStatus = document.getElementById('adminStatusFilter').value;
+            const query = document.getElementById('adminSearchInput').value.toLowerCase();
+            const tbody = document.getElementById('adminOrdersTableBody');
+
+            const filtered = orders.filter(o => {
+                const matchesStatus = filterStatus === 'all' || o.status === filterStatus;
+                const matchesSearch = o.code.toLowerCase().includes(query) ||
+                                     o.customer.name.toLowerCase().includes(query) ||
+                                     o.customer.phone.includes(query);
+                return matchesStatus && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-gray); padding: 20px;">No orders found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(order => {
+                let itemsSummary = order.items.map(i => {
+                    let opts = [];
+                    if (i.selectedColor) opts.push(i.selectedColor);
+                    if (i.selectedSize) opts.push(i.selectedSize);
+                    if (i.selectedSleeve && i.selectedSleeve !== '-') opts.push(i.selectedSleeve);
+                    if (i.selectedCuff && i.selectedCuff !== '-') opts.push(i.selectedCuff);
+                    const optStr = opts.length ? ` (${opts.join(', ')})` : '';
+                    return `${i.name}${optStr} [SKU: ${i.sku || 'N/A'}] (x${i.quantity})`;
+                }).join(', ');
+
+                return `
+                    <tr>
+                        <td><strong>${order.code}</strong></td>
+                        <td>${order.date}</td>
+                        <td>
+                            <strong>${order.customer.name}</strong><br>
+                            <small><i class="fas fa-phone"></i> ${order.customer.phone}</small><br>
+                            <small><i class="fas fa-phone-alt"></i> ${order.customer.altPhone}</small>
+                        </td>
+                        <td>
+                            <small>${order.customer.address}</small><br>
+                            <strong>Region:</strong> ${order.location === 'minya' ? 'Minya / New Minya' : 'Outside Minya'}
+                        </td>
+                        <td>
+                            <small>${itemsSummary}</small><br>
+                            <strong>${order.total} EGP</strong> (${order.payment.toUpperCase()})
+                        </td>
+                        <td>
+                            <select onchange="updateOrderStatus('${order.code}', this.value)" style="padding: 4px; border-radius: 4px; font-size: 12px;">
+                                <option value="Placed" ${order.status === 'Placed' ? 'selected' : ''}>Placed</option>
+                                <option value="Processing" ${order.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                                <option value="Out for Delivery" ${order.status === 'Out for Delivery' ? 'selected' : ''}>Out for Delivery</option>
+                                <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="view-details-btn" style="padding: 4px 8px; font-size: 12px;" onclick="viewFullAdminOrder('${order.code}')"><i class="fas fa-eye"></i></button>
+                            <button class="view-details-btn" style="padding: 4px 8px; font-size: 12px; color: var(--danger);" onclick="deleteAdminOrder('${order.code}')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateOrderStatus(code, newStatus) {
+            const orders = getStoredOrders();
+            const order = orders.find(o => o.code === code);
+            if (order) {
+                order.status = newStatus;
+                saveStoredOrders(orders);
+                renderAdminOrders();
+            }
+        }
+
+        function deleteAdminOrder(code) {
+            if (confirm(`Are you sure you want to delete order ${code}?`)) {
+                let orders = getStoredOrders();
+                orders = orders.filter(o => o.code !== code);
+                saveStoredOrders(orders);
+                renderAdminOrders();
+            }
+        }
+
+        function viewFullAdminOrder(code) {
+            const orders = getStoredOrders();
+            const o = orders.find(ord => ord.code === code);
+            if (!o) return;
+
+            document.getElementById('viewOrderCode').innerText = `#${o.code}`;
+            const content = document.getElementById('viewOrderContent');
+
+            content.innerHTML = `
+                <p><strong>Order Date:</strong> ${o.date}</p>
+                <p><strong>Status:</strong> <span class="admin-badge badge-processing">${o.status}</span></p>
+                <hr style="margin: 10px 0;">
+                <p><strong>Customer Name:</strong> ${o.customer.name}</p>
+                <p><strong>Primary Phone:</strong> <a href="tel:${o.customer.phone}">${o.customer.phone}</a></p>
+                <p><strong>Backup Phone:</strong> <a href="tel:${o.customer.altPhone}">${o.customer.altPhone}</a></p>
+                <p><strong>Email:</strong> ${o.customer.email || 'N/A'}</p>
+                <p><strong>Full Address:</strong> ${o.customer.address}</p>
+                <p><strong>Delivery Notes:</strong> ${o.customer.notes || 'None'}</p>
+                <hr style="margin: 10px 0;">
+                <p><strong>Payment Method:</strong> ${o.payment.toUpperCase()}</p>
+                <p><strong>Order Items:</strong></p>
+                <ul>
+                    ${o.items.map(i => {
+                        let opts = [];
+                        if (i.selectedColor) opts.push(`Color: ${i.selectedColor}`);
+                        if (i.selectedSize) opts.push(`Size: ${i.selectedSize}`);
+                        if (i.selectedSleeve && i.selectedSleeve !== '-') opts.push(`Sleeve: ${i.selectedSleeve}`);
+                        if (i.selectedCuff && i.selectedCuff !== '-') opts.push(`Cuffs: ${i.selectedCuff}`);
+                        const optStr = opts.length ? ` (${opts.join(', ')})` : '';
+                        return `<li>${i.name}${optStr} - [SKU: ${i.sku || 'N/A'}] - ${i.price} EGP x${i.quantity}</li>`;
+                    }).join('')}
+                </ul>
+                <p style="font-size: 16px; font-weight: bold; margin-top: 10px; color: var(--primary-color);">Total Price: ${o.total} EGP</p>
+            `;
+
+            openModal('adminOrderDetailModal');
+        }
+
+        function getAverageRating(reviewsArr) {
+            if (!reviewsArr || reviewsArr.length === 0) return { avg: 0, count: 0, starsHtml: "No ratings yet" };
+            const sum = reviewsArr.reduce((acc, r) => acc + r.rating, 0);
+            const avg = (sum / reviewsArr.length).toFixed(1);
+            
+            let starsHtml = "";
+            for (let i = 1; i <= 5; i++) {
+                starsHtml += (i <= Math.round(avg)) ? `<i class="fas fa-star"></i>` : `<i class="far fa-star"></i>`;
+            }
+            return { avg, count: reviewsArr.length, starsHtml };
+        }
+
+        // Live Dynamic SKU Stock Refresh on Select Box Change
+        function updateCardVariantStock(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const color = product.colors && product.colors.length > 0 ? document.getElementById(`card-color-${productId}`).value : null;
+            const size = product.sizes && product.sizes.length > 0 ? document.getElementById(`card-size-${productId}`).value : null;
+            const sleeve = product.sleeves && product.sleeves.filter(s => s !== '-').length > 0 ? document.getElementById(`card-sleeve-${productId}`).value : null;
+            const cuff = product.cuffs && product.cuffs.filter(c => c !== '-').length > 0 ? document.getElementById(`card-cuff-${productId}`).value : null;
+
+            const sku = getSKUForVariant(productId, color, size, sleeve, cuff);
+            const qty = getVariantQuantity(sku);
+
+            const badgeContainer = document.getElementById(`card-stock-badge-${productId}`);
+            const btn = document.getElementById(`card-add-btn-${productId}`);
+
+            if (badgeContainer) badgeContainer.innerHTML = getStockBadgeHtml(qty);
+            if (btn) {
+                if (qty === 0) {
+                    btn.disabled = true;
+                    btn.innerText = "Out of Stock";
+                } else {
+                    btn.disabled = false;
+                    btn.innerText = "Add to Cart";
+                }
+            }
+        }
+
+        function updateModalVariantStock(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const colorElem = document.getElementById('modalColorSelect');
+            const sizeElem = document.getElementById('modalSizeSelect');
+            const sleeveElem = document.getElementById('modalSleeveSelect');
+            const cuffElem = document.getElementById('modalCuffSelect');
+
+            const color = colorElem ? colorElem.value : null;
+            const size = sizeElem ? sizeElem.value : null;
+            const sleeve = sleeveElem ? sleeveElem.value : null;
+            const cuff = cuffElem ? cuffElem.value : null;
+
+            const sku = getSKUForVariant(productId, color, size, sleeve, cuff);
+            const qty = getVariantQuantity(sku);
+
+            const badgeContainer = document.getElementById('modalStockBadge');
+            const btn = document.getElementById('modalAddBtn');
+
+            if (badgeContainer) badgeContainer.innerHTML = getStockBadgeHtml(qty);
+            if (btn) {
+                if (qty === 0) {
+                    btn.disabled = true;
+                    btn.innerText = "Out of Stock";
+                } else {
+                    btn.disabled = false;
+                    btn.innerText = "Add to Cart";
+                }
+            }
+        }
+
+        function renderProducts(items) {
+            const grid = document.getElementById('productsGrid');
+            document.getElementById('resultsCount').innerText = `Showing ${items.length} product(s)`;
+            
+            if (items.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-gray); padding: 40px;">No products found.</p>`;
+                return;
+            }
+
+            grid.innerHTML = items.map(product => {
+                const inWishlist = wishlist.some(item => item.id === product.id);
+                const ratingData = getAverageRating(product.reviews);
+                const imageContent = product.image 
+                    ? `<img src="${product.image}" alt="${product.name}">` 
+                    : `<i class="fas ${product.icon}"></i>`;
+
+                const initialColor = (product.colors && product.colors.length > 0) ? product.colors[0] : null;
+                const initialSize = (product.sizes && product.sizes.length > 0) ? product.sizes[0].symbol : null;
+                const initialSleeve = (product.sleeves && product.sleeves.filter(s => s !== '-').length > 0) ? product.sleeves.filter(s => s !== '-')[0] : null;
+                const initialCuff = (product.cuffs && product.cuffs.filter(c => c !== '-').length > 0) ? product.cuffs.filter(c => c !== '-')[0] : null;
+
+                const defaultSku = getSKUForVariant(product.id, initialColor, initialSize, initialSleeve, initialCuff);
+                const initialQty = getVariantQuantity(defaultSku);
+
+                const colorSelectorHtml = (product.colors && product.colors.length > 0) ? `
+                    <div class="select-group">
+                        <label for="card-color-${product.id}">Select Color:</label>
+                        <select id="card-color-${product.id}" onchange="updateCardVariantStock(${product.id})">
+                            ${product.colors.map(c => `<option value="${c}">${c}</option>`).join('')}
+                        </select>
+                    </div>
+                ` : '';
+
+                const sizeSelectorHtml = (product.sizes && product.sizes.length > 0) ? `
+                    <div class="select-group">
+                        <label for="card-size-${product.id}">Select Size:</label>
+                        <select id="card-size-${product.id}" onchange="updateCardVariantStock(${product.id})">
+                            ${product.sizes.map(s => `<option value="${s.symbol}">${s.label}</option>`).join('')}
+                        </select>
+                    </div>
+                ` : '';
+
+                const sleeveSelectorHtml = (product.sleeves && product.sleeves.filter(s => s !== '-').length > 0) ? `
+                    <div class="select-group">
+                        <label for="card-sleeve-${product.id}">Sleeve Type:</label>
+                        <select id="card-sleeve-${product.id}" onchange="updateCardVariantStock(${product.id})">
+                            ${product.sleeves.filter(s => s !== '-').map(s => `<option value="${s}">${s}</option>`).join('')}
+                        </select>
+                    </div>
+                ` : '';
+
+                const cuffSelectorHtml = (product.cuffs && product.cuffs.filter(c => c !== '-').length > 0) ? `
+                    <div class="select-group">
+                        <label for="card-cuff-${product.id}">Cuffs Option:</label>
+                        <select id="card-cuff-${product.id}" onchange="updateCardVariantStock(${product.id})">
+                            ${product.cuffs.filter(c => c !== '-').map(c => `<option value="${c}">${c}</option>`).join('')}
+                        </select>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="product-card">
+                        <button class="wishlist-toggle-btn ${inWishlist ? 'active' : ''}" onclick="toggleWishlist(${product.id})" title="${inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}">
+                            <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
+                        </button>
+                        <div class="product-image" onclick="openProductDetail(${product.id})">
+                            ${imageContent}
+                        </div>
+                        <div class="product-info">
+                            ${product.brand ? `<span class="product-brand-tag">${product.brand}</span>` : ''}
+                            <h3 onclick="openProductDetail(${product.id})">${product.name}</h3>
+                            <div class="product-rating-summary" onclick="openProductDetail(${product.id})">
+                                ${ratingData.starsHtml} (${ratingData.count})
+                            </div>
+                            ${colorSelectorHtml}
+                            ${sizeSelectorHtml}
+                            ${sleeveSelectorHtml}
+                            ${cuffSelectorHtml}
+                            <div class="product-price">${product.price} EGP</div>
+                            <div id="card-stock-badge-${product.id}">
+                                ${getStockBadgeHtml(initialQty)}
+                            </div>
+                            <div class="product-card-actions">
+                                <button class="add-to-cart" id="card-add-btn-${product.id}" ${initialQty === 0 ? 'disabled' : ''} onclick="addToCartFromCard(${product.id})">
+                                    ${initialQty === 0 ? 'Out of Stock' : 'Add to Cart'}
+                                </button>
+                                <button class="view-details-btn" onclick="openProductDetail(${product.id})" title="Inspect Product"><i class="fas fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderWishlist() {
+            const grid = document.getElementById('wishlistGrid');
+            document.getElementById('wishlistCount').innerText = wishlist.length;
+
+            if (wishlist.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; background: var(--white); padding: 50px 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <i class="far fa-heart" style="font-size: 50px; color: var(--text-light); margin-bottom: 15px;"></i>
+                        <h3>Your Wishlist is Empty</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">Explore our catalog and heart products you want to buy later!</p>
+                        <button class="add-to-cart" style="width: auto; padding: 10px 25px;" onclick="scrollToSection('shop')">Browse Products</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = wishlist.map(product => {
+                const imageContent = product.image 
+                    ? `<img src="${product.image}" alt="${product.name}">` 
+                    : `<i class="fas ${product.icon}"></i>`;
+
+                return `
+                    <div class="product-card">
+                        <button class="wishlist-toggle-btn active" onclick="toggleWishlist(${product.id})" title="Remove from Wishlist">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <div class="product-image" onclick="openProductDetail(${product.id})">
+                            ${imageContent}
+                        </div>
+                        <div class="product-info">
+                            ${product.brand ? `<span class="product-brand-tag">${product.brand}</span>` : ''}
+                            <h3 onclick="openProductDetail(${product.id})">${product.name}</h3>
+                            <div class="product-price">${product.price} EGP</div>
+                            <div class="product-card-actions">
+                                <button class="add-to-cart" onclick="addToCartFromCard(${product.id})">Move to Cart</button>
+                                <button class="view-details-btn" onclick="toggleWishlist(${product.id})" title="Remove"><i class="fas fa-trash" style="color: var(--danger);"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleWishlist(productId) {
+            const index = wishlist.findIndex(item => item.id === productId);
+            const product = products.find(p => p.id === productId);
+
+            if (index > -1) {
+                wishlist.splice(index, 1);
+            } else {
+                wishlist.push(product);
+            }
+
+            renderProducts(products);
+            renderWishlist();
+        }
+
+        function clearWishlist() {
+            if (wishlist.length === 0) return;
+            if (confirm('Are you sure you want to clear your wishlist?')) {
+                wishlist = [];
+                renderProducts(products);
+                renderWishlist();
+            }
+        }
+
+        function openProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            currentInspectedProductId = productId;
+            const inWishlist = wishlist.some(item => item.id === product.id);
+            const ratingData = getAverageRating(product.reviews);
+            const container = document.getElementById('productDetailContainer');
+
+            const mainImgHtml = product.image 
+                ? `<img src="${product.image}" id="mainDetailImgElement">` 
+                : `<i class="fas ${product.icon}" id="mainDetailIconElement"></i>`;
+
+            let thumbsHtml = "";
+            if (product.images && product.images.length > 0) {
+                thumbsHtml = product.images.map((imgUrl, idx) => `
+                    <div class="thumb-box ${idx === 0 ? 'active' : ''}" onclick="changeDetailMedia('${imgUrl}', 'image', this)">
+                        <img src="${imgUrl}">
+                    </div>
+                `).join('');
+            } else {
+                thumbsHtml = product.galleryIcons.map((ic, idx) => `
+                    <div class="thumb-box ${idx === 0 ? 'active' : ''}" onclick="changeDetailMedia('${ic}', 'icon', this)">
+                        <i class="fas ${ic}"></i>
+                    </div>
+                `).join('');
+            }
+
+            const initialColor = (product.colors && product.colors.length > 0) ? product.colors[0] : null;
+            const initialSize = (product.sizes && product.sizes.length > 0) ? product.sizes[0].symbol : null;
+            const initialSleeve = (product.sleeves && product.sleeves.filter(s => s !== '-').length > 0) ? product.sleeves.filter(s => s !== '-')[0] : null;
+            const initialCuff = (product.cuffs && product.cuffs.filter(c => c !== '-').length > 0) ? product.cuffs.filter(c => c !== '-')[0] : null;
+
+            const defaultSku = getSKUForVariant(product.id, initialColor, initialSize, initialSleeve, initialCuff);
+            const initialQty = getVariantQuantity(defaultSku);
+
+            const modalColorSelectHtml = (product.colors && product.colors.length > 0) ? `
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="font-size: 13px; font-weight: 600;">Select Color:</label>
+                    <select id="modalColorSelect" onchange="updateModalVariantStock(${product.id})" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); font-size: 14px;">
+                        ${product.colors.map(c => `<option value="${c}">${c}</option>`).join('')}
+                    </select>
+                </div>
+            ` : '';
+
+            const modalSizeSelectHtml = (product.sizes && product.sizes.length > 0) ? `
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="font-size: 13px; font-weight: 600;">Select Size:</label>
+                    <select id="modalSizeSelect" onchange="updateModalVariantStock(${product.id})" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); font-size: 14px;">
+                        ${product.sizes.map(s => `<option value="${s.symbol}">${s.label}</option>`).join('')}
+                    </select>
+                </div>
+            ` : '';
+
+            const modalSleeveSelectHtml = (product.sleeves && product.sleeves.filter(s => s !== '-').length > 0) ? `
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="font-size: 13px; font-weight: 600;">Select Sleeve Type:</label>
+                    <select id="modalSleeveSelect" onchange="updateModalVariantStock(${product.id})" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); font-size: 14px;">
+                        ${product.sleeves.filter(s => s !== '-').map(s => `<option value="${s}">${s}</option>`).join('')}
+                    </select>
+                </div>
+            ` : '';
+
+            const modalCuffSelectHtml = (product.cuffs && product.cuffs.filter(c => c !== '-').length > 0) ? `
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="font-size: 13px; font-weight: 600;">Select Cuffs Option:</label>
+                    <select id="modalCuffSelect" onchange="updateModalVariantStock(${product.id})" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); font-size: 14px;">
+                        ${product.cuffs.filter(c => c !== '-').map(c => `<option value="${c}">${c}</option>`).join('')}
+                    </select>
+                </div>
+            ` : '';
+
+            container.innerHTML = `
+                <div class="detail-gallery">
+                    <div class="detail-main-img" id="mainDetailBox">
+                        ${mainImgHtml}
+                    </div>
+                    <div class="detail-thumbnails">
+                        ${thumbsHtml}
+                    </div>
+                </div>
+                <div class="detail-info">
+                    <span class="detail-meta-badge">Product Base ID: ${product.sku}</span>
+                    ${product.brand ? `<div class="product-brand-tag" style="font-size: 13px; margin-bottom: 2px;">Brand: ${product.brand}</div>` : ''}
+                    <h2>${product.name}</h2>
+                    <div style="color: #f39c12; font-size: 13px; margin-bottom: 10px; cursor: pointer;" onclick="scrollToReviews()">
+                        ${ratingData.starsHtml} <strong>${ratingData.avg} / 5</strong> (${ratingData.count} reviews)
+                    </div>
+                    <div class="detail-price">${product.price} EGP</div>
+                    <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 15px;">${product.description}</p>
+                    
+                    ${modalColorSelectHtml}
+                    ${modalSizeSelectHtml}
+                    ${modalSleeveSelectHtml}
+                    ${modalCuffSelectHtml}
+
+                    <div id="modalStockBadge">
+                        ${getStockBadgeHtml(initialQty)}
+                    </div>
+
+                    <strong style="font-size: 13px; margin-top: 10px; display: block;">Key Features & Metadata:</strong>
+                    <ul class="detail-spec-list">
+                        ${product.specs.map(s => `<li><i class="fas fa-check-circle" style="color: var(--success); margin-right: 6px;"></i> ${s}</li>`).join('')}
+                    </ul>
+
+                    <div class="detail-actions">
+                        <button class="add-to-cart" id="modalAddBtn" ${initialQty === 0 ? 'disabled' : ''} onclick="addToCartFromModal(${product.id})">
+                            ${initialQty === 0 ? 'Out of Stock' : 'Add to Cart'}
+                        </button>
+                        <button class="view-details-btn" onclick="toggleWishlist(${product.id}); openProductDetail(${product.id});">
+                            <i class="${inWishlist ? 'fas' : 'far'} fa-heart" style="color: ${inWishlist ? 'var(--danger)' : 'inherit'};"></i> ${inWishlist ? 'Saved' : 'Wishlist'}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            renderReviewsList(product.reviews);
+            openModal('productDetailModal');
+        }
+
+        function changeDetailMedia(srcVal, type, el) {
+            document.querySelectorAll('.thumb-box').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            const box = document.getElementById('mainDetailBox');
+
+            if (type === 'image') {
+                box.innerHTML = `<img src="${srcVal}">`;
+            } else {
+                box.innerHTML = `<i class="fas ${srcVal}"></i>`;
+            }
+        }
+
+        function renderReviewsList(reviewsArr) {
+            const listContainer = document.getElementById('reviewsList');
+            if (!reviewsArr || reviewsArr.length === 0) {
+                listContainer.innerHTML = `<p style="font-size: 13px; color: var(--text-gray);">No customer reviews submitted yet. Be the first to review!</p>`;
+                return;
+            }
+
+            listContainer.innerHTML = reviewsArr.map(rev => {
+                let stars = "";
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= rev.rating ? `<i class="fas fa-star"></i>` : `<i class="far fa-star"></i>`;
+                }
+
+                return `
+                    <div class="review-card">
+                        <div class="review-author">
+                            <span>${rev.author}</span>
+                            <span style="font-weight: normal; color: var(--text-light); font-size: 11px;">${rev.date}</span>
+                        </div>
+                        <div class="review-stars">${stars}</div>
+                        <div class="review-text">${rev.text}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function scrollToReviews() {
+            document.getElementById('reviewsPort').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getSavedReviews() { try { return JSON.parse(localStorage.getItem('kiromed_reviews') || '[]'); } catch (error) { return []; } }
+        function loadSavedReviews() { getSavedReviews().forEach(review => { const product = products.find(item => item.id === review.productId); if (product && !product.reviews.some(existing => existing.orderCode === review.orderCode && existing.productId === review.productId)) product.reviews.unshift(review); }); }
+        function saveReview(review) { const saved = getSavedReviews(); saved.push(review); localStorage.setItem('kiromed_reviews', JSON.stringify(saved)); }
+        function getReviewedKeys() { return getSavedReviews().map(review => `${review.orderCode}:${review.productId}`); }
+        function getEligibleReviewPurchases(productId = null) { const reviewed = new Set(getReviewedKeys()); return getStoredOrders().flatMap(order => order.items.filter(item => (productId === null || item.id === productId) && products.some(product => product.id === item.id) && !reviewed.has(`${order.code}:${item.id}`)).map(item => ({ order, item }))); }
+        function openPostPurchaseReviews(orderCode = null) { const eligible = getEligibleReviewPurchases().filter(entry => !orderCode || entry.order.code === orderCode); const container = document.getElementById('eligibleReviewProducts'); if (!eligible.length) { container.innerHTML = '<div style="padding:18px;border:1px solid var(--border-color);border-radius:10px;color:var(--text-gray);">There are no new purchased products waiting for review. You can review each product once per order.</div>'; } else { container.innerHTML = eligible.map(({order, item}) => `<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--border-color);"><div><strong>${item.name}</strong><div style="font-size:12px;color:var(--text-gray);">Order ${order.code} · Quantity ${item.quantity}</div></div><button class="submit-btn" style="width:auto;padding:8px 12px;" onclick="startVerifiedReview('${order.code}', ${item.id})">Review</button></div>`).join(''); } openModal('reviewEligibleModal'); }
+        function startVerifiedReview(orderCode, productId) { currentInspectedProductId = productId; window.currentReviewOrderCode = orderCode; closeModal('reviewEligibleModal'); const order = getStoredOrders().find(item => item.code === orderCode); document.getElementById('reviewEligibilityMessage').innerHTML = `<span class="verified-purchase-badge"><i class="fas fa-check-circle"></i> Verified purchase · ${orderCode}</span>`; selectStarRating(5); openModal('writeReviewModal'); }
+        function openReviewModal() { const eligible = getEligibleReviewPurchases(currentInspectedProductId); if (!eligible.length) { alert('Reviews are available after you place an order for this product. Open Track Order or review your items from the order confirmation.'); return; } startVerifiedReview(eligible[0].order.code, currentInspectedProductId); }
+        function selectStarRating(ratingVal) { selectedUserRating = ratingVal; const stars = document.querySelectorAll('#starRatingSelector .fa-star'); stars.forEach((s, idx) => { if (idx < ratingVal) s.classList.add('selected'); else s.classList.remove('selected'); }); }
+        function submitProductReview(e) { e.preventDefault(); const author = document.getElementById('reviewAuthor').value.trim(); const comment = document.getElementById('reviewComment').value.trim(); const orderCode = window.currentReviewOrderCode; if (!currentInspectedProductId || !orderCode || !getEligibleReviewPurchases(currentInspectedProductId).some(entry => entry.order.code === orderCode)) { alert('This review is only available to customers who purchased this product.'); return; } const product = products.find(p => p.id === currentInspectedProductId); if (product) { const review = { productId: product.id, orderCode, author, rating: selectedUserRating, text: comment, date: new Date().toISOString().split('T')[0], verifiedPurchase: true }; product.reviews.unshift(review); saveReview(review); renderProducts(products); openProductDetail(currentInspectedProductId); closeModal('writeReviewModal'); document.getElementById('reviewForm').reset(); window.currentReviewOrderCode = null; alert('Thank you! Your verified review has been published.'); } }
+
+        function addToCartFromCard(productId) {
+            const product = products.find(p => p.id === productId);
+            let selectedColor = null;
+            let selectedSize = null;
+            let selectedSleeve = null;
+            let selectedCuff = null;
+
+            if (product.colors && product.colors.length > 0) {
+                const colorElem = document.getElementById(`card-color-${productId}`);
+                if (colorElem) selectedColor = colorElem.value;
+            }
+            if (product.sizes && product.sizes.length > 0) {
+                const sizeElem = document.getElementById(`card-size-${productId}`);
+                if (sizeElem) selectedSize = sizeElem.value;
+            }
+            if (product.sleeves && product.sleeves.filter(s => s !== '-').length > 0) {
+                const sleeveElem = document.getElementById(`card-sleeve-${productId}`);
+                if (sleeveElem) selectedSleeve = sleeveElem.value;
+            }
+            if (product.cuffs && product.cuffs.filter(c => c !== '-').length > 0) {
+                const cuffElem = document.getElementById(`card-cuff-${productId}`);
+                if (cuffElem) selectedCuff = cuffElem.value;
+            }
+
+            addToCart(productId, selectedColor, selectedSize, selectedSleeve, selectedCuff);
+        }
+
+        function addToCartFromModal(productId) {
+            const product = products.find(p => p.id === productId);
+            let selectedColor = null;
+            let selectedSize = null;
+            let selectedSleeve = null;
+            let selectedCuff = null;
+
+            if (product.colors && product.colors.length > 0) {
+                const colorElem = document.getElementById('modalColorSelect');
+                if (colorElem) selectedColor = colorElem.value;
+            }
+            if (product.sizes && product.sizes.length > 0) {
+                const sizeElem = document.getElementById('modalSizeSelect');
+                if (sizeElem) selectedSize = sizeElem.value;
+            }
+            if (product.sleeves && product.sleeves.filter(s => s !== '-').length > 0) {
+                const sleeveElem = document.getElementById('modalSleeveSelect');
+                if (sleeveElem) selectedSleeve = sleeveElem.value;
+            }
+            if (product.cuffs && product.cuffs.filter(c => c !== '-').length > 0) {
+                const cuffElem = document.getElementById('modalCuffSelect');
+                if (cuffElem) selectedCuff = cuffElem.value;
+            }
+
+            addToCart(productId, selectedColor, selectedSize, selectedSleeve, selectedCuff);
+            closeModal('productDetailModal');
+        }
+
+        function addToCart(productId, selectedColor = null, selectedSize = null, selectedSleeve = null, selectedCuff = null) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const sku = getSKUForVariant(productId, selectedColor, selectedSize, selectedSleeve, selectedCuff);
+            const currentStock = getVariantQuantity(sku);
+
+            const existingItem = cart.find(item => 
+                item.id === productId && 
+                item.selectedColor === selectedColor &&
+                item.selectedSize === selectedSize &&
+                item.selectedSleeve === selectedSleeve &&
+                item.selectedCuff === selectedCuff
+            );
+
+            const qtyInCart = existingItem ? existingItem.quantity : 0;
+
+            if (qtyInCart + 1 > currentStock) {
+                alert(`Sorry! Only ${currentStock} item(s) available in stock for this variant.`);
+                return;
+            }
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ 
+                    ...product, 
+                    sku: sku,
+                    selectedColor: selectedColor, 
+                    selectedSize: selectedSize, 
+                    selectedSleeve: selectedSleeve,
+                    selectedCuff: selectedCuff,
+                    quantity: 1 
+                });
+            }
+
+            updateCartCount();
+
+            let labelArr = [];
+            if (selectedColor) labelArr.push(`Color: ${selectedColor}`);
+            if (selectedSize) labelArr.push(`Size: ${selectedSize}`);
+            if (selectedSleeve && selectedSleeve !== '-') labelArr.push(`Sleeve: ${selectedSleeve}`);
+            if (selectedCuff && selectedCuff !== '-') labelArr.push(`Cuffs: ${selectedCuff}`);
+            
+            const detailStr = labelArr.length ? ` (${labelArr.join(', ')})` : '';
+            alert(`Added ${product.name}${detailStr} to cart!`);
+        }
+
+        function updateQuantity(productId, selectedColor, selectedSize, selectedSleeve, selectedCuff, delta) {
+            const item = cart.find(i => 
+                i.id === productId && 
+                i.selectedColor === selectedColor &&
+                i.selectedSize === selectedSize &&
+                i.selectedSleeve === selectedSleeve &&
+                i.selectedCuff === selectedCuff
+            );
+
+            if (item) {
+                if (delta > 0) {
+                    const currentStock = getVariantQuantity(item.sku);
+                    if (item.quantity + 1 > currentStock) {
+                        alert(`Cannot add more. Only ${currentStock} available in stock.`);
+                        return;
+                    }
+                }
+
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => !(
+                        i.id === productId && 
+                        i.selectedColor === selectedColor &&
+                        i.selectedSize === selectedSize &&
+                        i.selectedSleeve === selectedSleeve &&
+                        i.selectedCuff === selectedCuff
+                    ));
+                }
+            }
+            updateCartCount();
+            renderCartItems();
+            updateCartSummary();
+        }
+
+        function updateCartCount() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const countBadge = document.getElementById('cartCount');
+            countBadge.innerText = totalCount;
+            countBadge.classList.remove('bump');
+            void countBadge.offsetWidth;
+            countBadge.classList.add('bump');
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsList');
+            if (cart.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: var(--text-gray);">Your cart is currently empty.</p>`;
+                return;
+            }
+
+            container.innerHTML = cart.map(item => {
+                let opts = [];
+                if (item.selectedColor) opts.push(`Color: ${item.selectedColor}`);
+                if (item.selectedSize) opts.push(`Size: ${item.selectedSize}`);
+                if (item.selectedSleeve && item.selectedSleeve !== '-') opts.push(`Sleeve: ${item.selectedSleeve}`);
+                if (item.selectedCuff && item.selectedCuff !== '-') opts.push(`Cuffs: ${item.selectedCuff}`);
+                const optsHtml = opts.length ? `<span style="color: var(--primary-color); font-size: 12px; display: block;">(${opts.join(', ')})</span>` : '';
+
+                const colorArg = item.selectedColor ? `'${item.selectedColor}'` : 'null';
+                const sizeArg = item.selectedSize ? `'${item.selectedSize}'` : 'null';
+                const sleeveArg = item.selectedSleeve ? `'${item.selectedSleeve}'` : 'null';
+                const cuffArg = item.selectedCuff ? `'${item.selectedCuff}'` : 'null';
+
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            ${optsHtml}
+                            <p>${item.price} EGP × ${item.quantity} = <strong>${item.price * item.quantity} EGP</strong></p>
+                        </div>
+                        <div class="cart-controls">
+                            <button onclick="updateQuantity(${item.id}, ${colorArg}, ${sizeArg}, ${sleeveArg}, ${cuffArg}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, ${colorArg}, ${sizeArg}, ${sleeveArg}, ${cuffArg}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPayment = method;
+            const codCard = document.getElementById('payCodCard');
+            const visaCard = document.getElementById('payVisaCard');
+            const visaFields = document.getElementById('visaFields');
+            const visaNameInput = document.getElementById('visaName');
+            const visaNumInput = document.getElementById('visaNum');
+
+            if (method === 'visa') {
+                visaCard.classList.add('active');
+                codCard.classList.remove('active');
+                visaFields.classList.add('show');
+                visaNameInput.setAttribute('required', 'true');
+                visaNumInput.setAttribute('required', 'true');
+            } else {
+                codCard.classList.add('active');
+                visaCard.classList.remove('active');
+                visaFields.classList.remove('show');
+                visaNameInput.removeAttribute('required');
+                visaNumInput.removeAttribute('required');
+            }
+            updateCartSummary();
+        }
+
+        function updateCartSummary() {
+            const location = document.getElementById('shippingLocation').value;
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const totalWearablesCount = cart.reduce((count, item) => item.isWearable ? count + item.quantity : count, 0);
+            const wearableSubtotal = cart.reduce((sum, item) => item.isWearable ? sum + (item.price * item.quantity) : sum, 0);
+            
+            let wearableDiscount = 0;
+            let wearableDiscountText = "";
+            if (totalWearablesCount >= 3) {
+                wearableDiscount = wearableSubtotal * 0.20;
+                wearableDiscountText = `Apparel 20% Bundle Discount (${totalWearablesCount} items):`;
+            } else if (totalWearablesCount === 2) {
+                wearableDiscount = wearableSubtotal * 0.10;
+                wearableDiscountText = `Apparel 10% Bundle Discount (2 items):`;
+            }
+
+            const wearableDiscountRow = document.getElementById('wearableDiscountRow');
+            if (wearableDiscount > 0) {
+                wearableDiscountRow.style.display = 'flex';
+                document.getElementById('wearableDiscountLabel').innerText = wearableDiscountText;
+                document.getElementById('wearableDiscountAmount').innerText = `-${wearableDiscount.toFixed(0)} EGP`;
+            } else {
+                wearableDiscountRow.style.display = 'none';
+            }
+
+            const discountedSubtotal = subtotal - wearableDiscount;
+
+            let baseShipping = (location === 'minya') ? 30 : 150; 
+            let visaDiscount = (selectedPayment === 'visa') ? baseShipping * 0.30 : 0;
+
+            const finalShipping = baseShipping - visaDiscount;
+            const total = discountedSubtotal + finalShipping;
+
+            document.getElementById('subtotalAmount').innerText = `${subtotal} EGP`;
+            document.getElementById('shippingFeeAmount').innerText = `${baseShipping} EGP`;
+
+            const discountRow = document.getElementById('discountRow');
+            if (visaDiscount > 0) {
+                discountRow.style.display = 'flex';
+                document.getElementById('discountAmount').innerText = `-${visaDiscount.toFixed(0)} EGP`;
+            } else {
+                discountRow.style.display = 'none';
+            }
+
+            document.getElementById('totalAmount').innerText = `${total.toFixed(0)} EGP`;
+            
+            const submitBtn = document.getElementById('submitOrderBtn');
+            submitBtn.innerText = selectedPayment === 'visa' 
+                ? `Pay ${total.toFixed(0)} EGP via Visa` 
+                : `Place Order (${total.toFixed(0)} EGP - Cash on Delivery)`;
+        }
+
+        function filterCategory(cat) {
+            currentCategoryFilter = cat;
+            const brandSelect = document.getElementById('brandFilterSelect');
+            
+            if (cat === 'apparel') {
+                brandSelect.style.display = 'inline-block';
+            } else {
+                brandSelect.style.display = 'none';
+                currentBrandFilter = 'all';
+                brandSelect.value = 'all';
+            }
+            
+            applyCombinedFilters();
+            scrollToSection('shop');
+        }
+
+        function filterBrand(brandVal) {
+            currentBrandFilter = brandVal;
+            applyCombinedFilters();
+        }
+
+        function searchProducts() {
+            applyCombinedFilters();
+        }
+
+        function applyCombinedFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const showAllCard = document.getElementById('showAllCategoryCard');
+            
+            if (query !== '' || currentCategoryFilter !== 'all' || currentBrandFilter !== 'all') {
+                if (showAllCard) showAllCard.style.display = 'none';
+            } else {
+                if (showAllCard) showAllCard.style.display = 'block';
+            }
+
+            const filtered = products.filter(p => {
+                const matchesCat = currentCategoryFilter === 'all' || p.category === currentCategoryFilter;
+                const matchesBrand = currentBrandFilter === 'all' || p.brand === currentBrandFilter;
+                const matchesSearch = !query || 
+                                     p.name.toLowerCase().includes(query) || 
+                                     p.category.toLowerCase().includes(query) ||
+                                     (p.brand && p.brand.toLowerCase().includes(query));
+                
+                return matchesCat && matchesBrand && matchesSearch;
+            });
+
+            renderProducts(filtered);
+        }
+
+        function resetFilter() {
+            currentCategoryFilter = 'all';
+            currentBrandFilter = 'all';
+            document.getElementById('searchInput').value = '';
+            const brandSelect = document.getElementById('brandFilterSelect');
+            brandSelect.value = 'all';
+            brandSelect.style.display = 'none';
+            
+            const showAllCard = document.getElementById('showAllCategoryCard');
+            if (showAllCard) showAllCard.style.display = 'block';
+
+            renderProducts(products);
+        }
+
+        function openModal(id) {
+            if (id === 'checkoutModal') {
+                renderCartItems();
+                updateCartSummary();
+            }
+            document.getElementById(id).classList.add('open');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openTrackModalAuto() {
+            openModal('trackModal');
+            showAutoTrackView();
+        }
+
+        function showAutoTrackView() {
+            const activeOrderInfo = getActivePhoneOrder();
+            const orders = getStoredOrders();
+
+            if (activeOrderInfo) {
+                const match = orders.find(o => o.code === activeOrderInfo.code);
+                if (match) {
+                    renderTrackingUI(match);
+                    document.getElementById('trackingResult').style.display = 'block';
+                    document.getElementById('manualTrackForm').style.display = 'none';
+                    document.getElementById('noActiveOrderView').style.display = 'none';
+                    return;
+                }
+            }
+
+            document.getElementById('trackingResult').style.display = 'none';
+            document.getElementById('manualTrackForm').style.display = 'none';
+            document.getElementById('noActiveOrderView').style.display = 'block';
+        }
+
+        function showManualTrackForm() {
+            document.getElementById('trackingResult').style.display = 'none';
+            document.getElementById('noActiveOrderView').style.display = 'none';
+            document.getElementById('manualTrackForm').style.display = 'block';
+        }
+
+        function trackOrderManual() {
+            const orderId = document.getElementById('trackOrderId').value.trim().toUpperCase();
+            const phone = document.getElementById('trackPhone').value.trim();
+            const orders = getStoredOrders();
+
+            const match = orders.find(o => (o.code === orderId || `KERO-${o.code}` === orderId) && (o.customer.phone === phone || o.customer.altPhone === phone));
+
+            if (match) {
+                renderTrackingUI(match);
+                document.getElementById('manualTrackForm').style.display = 'none';
+                document.getElementById('trackingResult').style.display = 'block';
+            } else {
+                alert('No matching order found. Please check your Order ID and phone number.');
+            }
+        }
+
+        function renderTrackingUI(match) {
+            document.getElementById('trackedOrderCodeDisplay').innerText = `Order #${match.code}`;
+            document.getElementById('trackedStatusDisplay').innerText = match.status;
+
+            const line = document.getElementById('progressLine');
+            const steps = ['stepPlaced', 'stepProcessing', 'stepShipping', 'stepDelivered'];
+            steps.forEach(s => {
+                document.getElementById(s).classList.remove('active', 'completed');
+            });
+
+            if (match.status === 'Placed') {
+                line.style.width = '10%';
+                document.getElementById('stepPlaced').classList.add('active');
+            } else if (match.status === 'Processing') {
+                line.style.width = '35%';
+                document.getElementById('stepPlaced').classList.add('completed');
+                document.getElementById('stepProcessing').classList.add('active');
+            } else if (match.status === 'Out for Delivery') {
+                line.style.width = '65%';
+                document.getElementById('stepPlaced').classList.add('completed');
+                document.getElementById('stepProcessing').classList.add('completed');
+                document.getElementById('stepShipping').classList.add('active');
+            } else if (match.status === 'Delivered') {
+                line.style.width = '100%';
+                steps.forEach(s => document.getElementById(s).classList.add('completed'));
+            }
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            if (cart.length === 0) {
+                alert('Your cart is empty! Add items before placing an order.');
+                return;
+            }
+
+            // Verify Stock availability right before checkout
+            for (let item of cart) {
+                const currentStock = getVariantQuantity(item.sku);
+                if (item.quantity > currentStock) {
+                    alert(`Stock conflict: Only ${currentStock} item(s) available for ${item.name} (${item.sku}). Please adjust your cart.`);
+                    return;
+                }
+            }
+
+            // Deduct stock automatically
+            for (let item of cart) {
+                if (stockInventory[item.sku] !== undefined) {
+                    stockInventory[item.sku] -= item.quantity;
+                }
+            }
+            saveStockInventory(stockInventory);
+
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const altPhone = document.getElementById('custAltPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            const notes = document.getElementById('custNotes').value.trim();
+            const email = document.getElementById('custEmail').value.trim();
+            const location = document.getElementById('shippingLocation').value;
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalWearablesCount = cart.reduce((count, item) => item.isWearable ? count + item.quantity : count, 0);
+            const wearableSubtotal = cart.reduce((sum, item) => item.isWearable ? sum + (item.price * item.quantity) : sum, 0);
+
+            let wearableDiscount = 0;
+            if (totalWearablesCount >= 3) {
+                wearableDiscount = wearableSubtotal * 0.20;
+            } else if (totalWearablesCount === 2) {
+                wearableDiscount = wearableSubtotal * 0.10;
+            }
+
+            const discountedSubtotal = subtotal - wearableDiscount;
+            let baseShipping = (location === 'minya') ? 30 : 150;
+            let visaDiscount = (selectedPayment === 'visa') ? baseShipping * 0.30 : 0;
+            const finalShipping = baseShipping - visaDiscount;
+            const finalTotal = discountedSubtotal + finalShipping;
+
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const orderCode = `KERO-${randomNum}`;
+            const today = new Date().toISOString().split('T')[0];
+
+            const newOrder = {
+                code: orderCode,
+                date: today,
+                status: 'Processing',
+                items: [...cart],
+                location: location,
+                payment: selectedPayment,
+                total: finalTotal.toFixed(0),
+                customer: {
+                    name,
+                    phone,
+                    altPhone,
+                    address,
+                    notes,
+                    email
+                }
+            };
+
+            const storedOrders = getStoredOrders();
+            storedOrders.unshift(newOrder);
+            saveStoredOrders(storedOrders);
+
+            setActivePhoneOrder(orderCode, phone);
+
+            cart = [];
+            updateCartCount();
+            document.getElementById('checkoutForm').reset();
+            closeModal('checkoutModal');
+
+            // Re-render shop page to immediately show updated stock status
+            renderProducts(products);
+
+            window.lastCompletedOrderCode = orderCode;
+            document.getElementById('successOrderCode').innerText = orderCode;
+            openModal('orderSuccessModal');
+        }
+    </script>
+</body>
+</html>
